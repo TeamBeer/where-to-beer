@@ -1,0 +1,57 @@
+{
+  "name": "where-to-beer",
+  "version": "1.0.0",
+  "description": "Constructor Labs group project. An app that helps you organise where to meet for beers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "dev": "webpack --mode development",
+    "build": "webpack --mode production",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeamBeer/where-to-beer.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TeamBeer/where-to-beer/issues"
+  },
+  "homepage": "https://github.com/TeamBeer/where-to-beer#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "classnames": "^2.2.6",
+    "express": "^4.16.4",
+    "hbs": "^4.0.1",
+    "node": "^10.12.0",
+    "pg-promise": "^8.5.1",
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-jest": "^23.6.0",
+    "babel-loader": "^8.0.4",
+    "css-loader": "^1.0.0",
+    "enzyme": "^3.7.0",
+    "enzyme-adapter-react-16": "^1.6.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^23.6.0",
+    "jest-fetch-mock": "^1.6.6",
+    "node-sass": "^4.9.4",
+    "react-test-renderer": "^16.5.2",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ]
+  }
+}

@@ -22,12 +22,12 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    const updateTarget = [this.state.eventData[event.target.name]];
-    const updateValue = event.target.value;
     this.setState({
-      eventData: Object.assign({}, this.state.eventData, { [event.target.name]: updateValue })
-
-    })
+      eventData: Object.assign(
+        {},
+        this.state.eventData,
+        { [event.target.name]: event.target.value })
+    });
   }
 
   onSubmit(event) {

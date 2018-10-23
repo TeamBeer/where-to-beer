@@ -10,6 +10,7 @@ CREATE TABLE member (
   CREATE TABLE event (
     id serial,
     name varchar(50) NOT NULL UNIQUE,
+    date_time TIMESTAMP NOT NULL,
     PRIMARY KEY (id)
   );
 
@@ -51,7 +52,7 @@ INSERT INTO member (name) VALUES ('Joe');
 INSERT INTO member (name) VALUES ('Mel');
 INSERT INTO member (name) VALUES ('Dan');
 
-INSERT INTO event (name) VALUES ('electric-dog', '2018-10-23T13:14:17Z');
+INSERT INTO event (name, date_time) VALUES ('electric-dog', '2018-10-23T13:14:17Z');
 
 INSERT INTO member_event (member_id, event_id) VALUES (1, 1);
 INSERT INTO member_event (member_id, event_id) VALUES (2, 1);

@@ -33,8 +33,14 @@ class App extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     //  concatenate the date and time in the eventTime object iso 8601 date format
-    // { memberName, eventName, dateTime, venueName, venuePostcode, venueReason } = req.body
-    // pass the object to the submit to database function
+    const { date, time } = this.state.eventData;
+    const dateTime = `${date}T${time}:00`;
+    const eventData = Object.assign({}, this.state.eventData, { dateTime })
+    // clean up eventData object to fit {memberName, eventName, dateTime, venueName, venuePostcode, venueReason} shape
+    delete eventData.date;
+    delete eventData.time;
+    // pass eventData object to createNewEvent on database function
+    // createNewEvent(eventData);
   }
 
 

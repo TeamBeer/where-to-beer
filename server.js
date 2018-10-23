@@ -34,12 +34,23 @@ app.post('/api/event', (req, res) => {
         db.none('INSERT INTO member_event (member_id, event_id) VALUES ($1, $2)', [memberId.id, eventId.id]),
         db.one('INSERT INTO suggestion (member_id, event_id, venue_name, reason, postcode) VALUES ($1, $2, $3, $4, $5) RETURNING id', [memberId.id, eventId.id, venueName, venueReason, venuePostcode])
       ])
-      .then(()=>res.json(eventId))
+      .then(() => getEventFromDb(eventId.id))
+      .then((eventData)=>res.json(eventData))
     })
     .catch((error)=>{
       res.json({error: error.message})
     })
   })
+
+const getEventFromDb = (eventId) => {
+    return Promise.all([
+      db.one('SELECT * FROM event WHERE id = $1',[eventId]),
+      db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name FROM suggestion, member WHERE event_id = $1 AND suggestion.member_id = member.id', [eventId])
+    ])
+    .then(([event,suggestions])=> ({event:event,suggestions:suggestions})
+    )
+  }
+
 
 
 // PUT / UPDATE :: Event
@@ -95,8 +106,6 @@ app.post('/api/vote', (req, res) => {
     res.json({error: error.message});
   })
 })
-
-
 
 // DELETE :: Vote on Suggestion
 

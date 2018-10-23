@@ -25,31 +25,31 @@ return (
 
     <form className="setupform">
             <div>
-                <label className="setupform__namelabel" for="name">Name</label>
+                <label className="setupform__namelabel" htmlFor="name">Name</label>
                 <input className="setupform__name" type="text" name="name" value="" placeholder="NAME" required />
             </div> 
             <div>
-                <label className="setupform__datelabel" for="date">Date</label>
+                <label className="setupform__datelabel" htmlFor="date">Date</label>
                 <input className="setupform__date" type="date" name="date" value="" placeholder="DATE" required />
             </div>  
             <div>
-                <label className="setupform__timelabel" for="time">Time</label>
+                <label className="setupform__timelabel" htmlFor="time">Time</label>
                 <input className="setupform__time" type="time" name="time" value="" placeholder="TIME" required />
             </div>
             <div>
-                <label className="setupform__venuelabel" for="time">Pub Name</label>
+                <label className="setupform__venuelabel" htmlFor="time">Pub Name</label>
                     <input className="setupform__venue" type="text" name="venue" value="" placeholder="PUB NAME" required />
             </div>           
             <div>
-                <label className="setupform__postcodelabel" for="postcode">Postcode</label>
+                <label className="setupform__postcodelabel" htmlFor="postcode">Postcode</label>
                 <input className="setupform__postcode" type="text" name="postcode" value="" placeholder="POSTCODE" required />
             </div>
             <div>
-                <label className="ssetupform__commentlabel" for="comment">Postcode</label>
+                <label className="ssetupform__commentlabel" htmlFor="comment">Postcode</label>
                 <textarea className="setupform__comment" name="comment" placeholder="Comment (optional)"></textarea>
             </div>
             <div>
-                <button className="setupform__btn btn" type="submit" value="">Create</button>
+                <button className="btn btn__submit" type="submit" value="">Create</button>
             </div>
         </form>
   </section>
@@ -69,8 +69,8 @@ return (
           It's got a nice  quiet room upstairs so we should get a seat
         </p>
 
-        <button className="confirm__editbtn btn">Edit</button>
-        <button className="confirm__linkbtn btn">Get Invite Link</button>
+        <button className="btn btn__edit">Edit</button>
+        <button className="btn btn__submit" type="submit" value="">Get Invite Link</button>
 
         <p className="confirm__viewlink">http://fancyapint.com/electric-dog</p>
     </section>

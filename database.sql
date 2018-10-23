@@ -21,7 +21,6 @@ CREATE TABLE member (
   PRIMARY KEY (id),
   FOREIGN KEY (member_id) REFERENCES member (id),
   FOREIGN KEY (event_id) REFERENCES event (id)
-
 );
 
 CREATE TABLE suggestion (

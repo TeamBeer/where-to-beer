@@ -4,6 +4,35 @@ import React from "react";
 class App extends React.Component {
   constructor() {
   super();
+
+  this.createNewEvent = this.createNewEvent.bind(this)
+
+  this.state = {
+    urlToShare: ""
+  }
+
+
+  }
+
+
+
+// On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
+  createNewEvent(){
+    //reference to formData being posted
+    fetch('/api/event', {
+      method: 'post',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      })
+      .then(response => response.json())
+      .then(body => {
+        const shareUrl = `localhost:8080/event/${body.id}`
+        this.setState({
+          shareURL
+        })
+      })
+
   }
 
 
@@ -27,11 +56,11 @@ return (
             <div>
                 <label className="setupform__namelabel" htmlFor="name">Name</label>
                 <input className="setupform__name" type="text" name="name" value="" placeholder="NAME" required />
-            </div> 
+            </div>
             <div>
                 <label className="setupform__datelabel" htmlFor="date">Date</label>
                 <input className="setupform__date" type="date" name="date" value="" placeholder="DATE" required />
-            </div>  
+            </div>
             <div>
                 <label className="setupform__timelabel" htmlFor="time">Time</label>
                 <input className="setupform__time" type="time" name="time" value="" placeholder="TIME" required />
@@ -39,7 +68,7 @@ return (
             <div>
                 <label className="setupform__venuelabel" htmlFor="time">Pub Name</label>
                     <input className="setupform__venue" type="text" name="venue" value="" placeholder="PUB NAME" required />
-            </div>           
+            </div>
             <div>
                 <label className="setupform__postcodelabel" htmlFor="postcode">Postcode</label>
                 <input className="setupform__postcode" type="text" name="postcode" value="" placeholder="POSTCODE" required />
@@ -57,11 +86,11 @@ return (
 {/* organiser-confirmation */}
 
   <section className="organiserConfirm">
-    
+
     <header className="confirm__header">
         <h2 className="confirm_title">Let's meet on Friday 26 October at 7pm</h2>
     </header>
-    
+
     <section className="confirm__suggestion">
       <h3>Your suggestion</h3>
       <h4 className="suggestion_subtitle">The Star and Garter<span>W1F 7NX</span></h4>

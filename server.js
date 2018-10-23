@@ -23,13 +23,26 @@ app.get('/', function(req, res){
 
 // POST / INSERT :: New Event
 app.post('/api/event', (req, res) => {
-  const {name} = req.body
-  db.one('INSERT INTO event (name) VALUES ($1) RETURNING id', [name])
-  .then(eventId => res.json(eventId))
-  .catch(error => {
-    res.json({error: error.message});
-  })
-})
+  let newMemberId = ""
+  let newEventId = ""
+  const {memberName, eventName, dateTime, venueName, venuePostcode, venueReason} = req.body
+  Promise.all([
+    db.one('INSERT INTO member (name) VALUES ($1) RETURNING id', [memberName]),
+    db.one('INSERT INTO event (name, date_time) VALUES ($1, $2) RETURNING id', [ eventName, dateTime])
+  ])
+    .then(([memberId, eventId])=> {
+      console.log(memberId)
+      console.log(eventId)
+      newMemberId = memberId.id
+      newEventId = eventId.id
+      return Promise.all([
+        db.none('INSERT INTO member_event (member_id, event_id) VALUES ($1, $2)', [newMemberId, eventId.id]),
+        db.one('INSERT INTO suggestion (member_id, event_id, venue_name, reason, postcode) VALUES ($1, $2, $3, $4, $5) RETURNING id', [newMemberId, newEventId, venueName, venueReason, venuePostcode])
+      ])
+      .then(()=>res.json(eventId))
+    })
+    })
+
 
 // PUT / UPDATE :: Event
 app.put('/api/event/:eventId', (req, res) => {

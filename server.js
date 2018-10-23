@@ -13,24 +13,24 @@ app.get('/', function(req, res){
 
 // POST / INSERT :: New Event
 app.post('/api/event', (req, res) => {
-  const {username, reason, dateTime} = req.body
-  db.one('INSERT INTO group (username, dateTime, reason) VALUES ($1, $2, $3) RETURNING id', [username,reason, dateTime])
-  .then(data => res.json(data))
+  const {name} = req.body
+  db.one('INSERT INTO event (name) VALUES ($1) RETURNING id', [name])
+  .then(eventId => res.json(eventId))
   .catch(error => {
     res.json({error: error.message});
   })
 })
 
-// PUT / UPDATE :: My Event
-app.put('/api/event/:groupId', (req, res) => {
-  const groupId = req.params.groupId
-  const {username, reason, dateTime} = req.body
+// PUT / UPDATE :: Event
+app.put('/api/event/:eventId', (req, res) => {
+  const eventId = req.params.eventId
+  const {name} = req.body
   console.log(`api.put req.body :: ${req.body}`)
-  console.log(`api.put groupId :: ${groupId}`)
-  db.one('UPDATE group SET username = ($1), reason = ($2), dateTime = ($3) WHERE groupId = $4 RETURNING id', [username, reason, dateTime, groupId])
-  .then(data => {
-    console.log(`api.put :: ${data}`)
-    res.json(data)
+  console.log(`api.put eventId :: ${eventId}`)
+  db.one('UPDATE event SET name = ($1) WHERE eventId = $2 RETURNING id', [name, eventId])
+  .then(updatedEvent => {
+    console.log(`api.put :: ${updatedEvent}`)
+    res.json(updatedEvent)
   })
   .catch((error) => {
     res.json({error: error.message});
@@ -43,8 +43,8 @@ app.put('/api/event/:groupId', (req, res) => {
 app.get('/api/event/:eventId', (req, res) => {
   const eventId = req.params.eventId
   db.any('SELECT * FROM event WHERE eventId = $1', [eventId])
-    .then((data) => {
-      res.json(data)
+    .then((event) => {
+      res.json(event)
     })
     .catch((error) => {
       res.json({error: error.message})
@@ -53,9 +53,31 @@ app.get('/api/event/:eventId', (req, res) => {
 
 
 // POST :: New Suggestion
+app.post('/api/suggestion', (req, res) => {
+  const {venueName, reason, memberId, eventId, postcode} = req.body
+  db.one('INSERT INTO suggestion (venue_name, reason, member_id, event_id, postcode) VALUES ($1, $2, $3, $4) RETURNING id', [venueName,reason, memberId, eventId, postcode])
+  .then(suggestionId => res.json(suggestionId))
+  .catch(error => {
+    res.json({error: error.message});
+  })
+})
+
+// PUT :: 
+
 // DELETE :: My Suggestion
 
 // POST :: Vote on Suggestion
+app.post('/api/vote', (req, res) => {
+  const {memberId, suggestionId} = req.body
+  db.one('INSERT INTO vote (suggestion_Id, member_Id) VALUES ($1, $2) RETURNING id', [memberId,suggestionId])
+  .then(voteId => res.json(voteId))
+  .catch(error => {
+    res.json({error: error.message});
+  })
+})
+
+
+
 // DELETE :: Vote on Suggestion
 
 

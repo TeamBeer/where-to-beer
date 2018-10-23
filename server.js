@@ -22,26 +22,24 @@ app.get('/', function(req, res){
 
 
 // POST / INSERT :: New Event
+// This endpoint creates an entry in member, event, member_event and suggestion tables
 app.post('/api/event', (req, res) => {
-  let newMemberId = ""
-  let newEventId = ""
   const {memberName, eventName, dateTime, venueName, venuePostcode, venueReason} = req.body
   Promise.all([
     db.one('INSERT INTO member (name) VALUES ($1) RETURNING id', [memberName]),
     db.one('INSERT INTO event (name, date_time) VALUES ($1, $2) RETURNING id', [ eventName, dateTime])
   ])
     .then(([memberId, eventId])=> {
-      console.log(memberId)
-      console.log(eventId)
-      newMemberId = memberId.id
-      newEventId = eventId.id
       return Promise.all([
-        db.none('INSERT INTO member_event (member_id, event_id) VALUES ($1, $2)', [newMemberId, eventId.id]),
-        db.one('INSERT INTO suggestion (member_id, event_id, venue_name, reason, postcode) VALUES ($1, $2, $3, $4, $5) RETURNING id', [newMemberId, newEventId, venueName, venueReason, venuePostcode])
+        db.none('INSERT INTO member_event (member_id, event_id) VALUES ($1, $2)', [memberId.id, eventId.id]),
+        db.one('INSERT INTO suggestion (member_id, event_id, venue_name, reason, postcode) VALUES ($1, $2, $3, $4, $5) RETURNING id', [memberId.id, eventId.id, venueName, venueReason, venuePostcode])
       ])
       .then(()=>res.json(eventId))
     })
+    .catch((error)=>{
+      res.json({error: error.message})
     })
+  })
 
 
 // PUT / UPDATE :: Event
@@ -63,15 +61,14 @@ app.put('/api/event/:eventId', (req, res) => {
 // DELETE :: My Event
 
 // GET :: View event
+// This endpoint creates an object containing event details (from event table) and suggestions for that event (from suggestions table)
 app.get('/api/event/:eventId', (req, res) => {
   const eventId = req.params.eventId
-  db.any('SELECT * FROM event WHERE id = $1', [eventId])
-    .then((event) => {
-      res.json(event)
-    })
-    .catch((error) => {
-      res.json({error: error.message})
-    })
+  Promise.all([
+    db.one('SELECT * FROM event WHERE id = $1',[eventId]),
+    db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name FROM suggestion, member WHERE event_id = $1 AND suggestion.member_id = member.id', [eventId])
+  ])
+  .then(([event,suggestions])=> res.json({event:event,suggestions:suggestions}))
   })
 
 

@@ -1,4 +1,5 @@
 import React from "react";
+import CreateEvent from "./CreateEvent";
 import '../styles/components/app.scss';
 
 class App extends React.Component {
@@ -12,7 +13,7 @@ class App extends React.Component {
         time: "19:00",
         venueName: "",
         venuePostcode: "",
-        venueReason: ""
+        eventReason: ""
       },
     }
 
@@ -21,7 +22,6 @@ class App extends React.Component {
   }
 
   handleChange(event) {
-    console.log(event.target.name, event.target.value);
     const updateTarget = [this.state.eventData[event.target.name]];
     const updateValue = event.target.value;
     this.setState({
@@ -32,7 +32,7 @@ class App extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    //  concatenate the date and time in the eventTime object
+    //  concatenate the date and time in the eventTime object iso 8601 date format
     // { memberName, eventName, dateTime, venueName, venuePostcode, venueReason } = req.body
     // pass the object to the submit to database function
   }

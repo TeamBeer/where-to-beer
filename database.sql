@@ -1,7 +1,5 @@
 -- basic table set up
-
-CREATE DATABASE beer_db
-
+CREATE DATABASE beer_db;
 
 CREATE TABLE member (
   id serial,
@@ -15,7 +13,7 @@ CREATE TABLE member (
     PRIMARY KEY (id)
   );
 
-  CREATE TABLE member_map (
+  CREATE TABLE member_event (
   id serial,
   member_id INT NOT NULL,
   event_id INT NOT NULL,
@@ -37,7 +35,7 @@ CREATE TABLE suggestion (
   FOREIGN KEY (event_id) REFERENCES event (id)
 );
 
-CREATE TABLE vote_map (
+CREATE TABLE vote (
   id SERIAL,
   member_id INT NOT NULL,
   suggestion_id INT NOT NULL,
@@ -55,15 +53,15 @@ INSERT INTO member (name) VALUES ('Dan');
 
 INSERT INTO event (name) VALUES ('electric-dog');
 
-INSERT INTO member_map (member_id, event_id) VALUES (1, 1);
-INSERT INTO member_map (member_id, event_id) VALUES (2, 1);
-INSERT INTO member_map (member_id, event_id) VALUES (3, 1);(
-INSERT INTO member_map (member_id, event_id) VALUES (4, 1);
+INSERT INTO member_event (member_id, event_id) VALUES (1, 1);
+INSERT INTO member_event (member_id, event_id) VALUES (2, 1);
+INSERT INTO member_event (member_id, event_id) VALUES (3, 1);
+INSERT INTO member_event (member_id, event_id) VALUES (4, 1);
 
 INSERT INTO suggestion (venue_name, postcode, reason, member_id, event_id) VALUES ('The Castle', 'E1 3RT', 'Pool Table', 1, 1);
 INSERT INTO suggestion (venue_name, postcode, reason, member_id, event_id) VALUES ('The Junction', 'W4 5NT', 'Quiz Night', 4, 1);
 
-INSERT INTO vote_map (member_id, suggestion_id) VALUES (1, 1);
-INSERT INTO vote_map (member_id, suggestion_id) VALUES (2, 1);
-INSERT INTO vote_map (member_id, suggestion_id) VALUES (3, 1);
-INSERT INTO vote_map (member_id, suggestion_id) VALUES (4, 2);
+INSERT INTO vote (member_id, suggestion_id) VALUES (1, 1);
+INSERT INTO vote (member_id, suggestion_id) VALUES (2, 1);
+INSERT INTO vote (member_id, suggestion_id) VALUES (3, 1);
+INSERT INTO vote (member_id, suggestion_id) VALUES (4, 2);

@@ -9,7 +9,7 @@ class App extends React.Component {
 
   this.state = {
     urlToShare: "", //populated by createNewEvent when form is submitted
-    formData: {},   //populated by form submit
+    formData: {}  //populated by form submit
   }
 
   }
@@ -23,7 +23,8 @@ class App extends React.Component {
       body: JSON.stringify(this.state.formData),
       headers: {
         'Content-Type': 'application/json'
-      })
+      }
+    })
       .then(response => response.json())
       .then(body => {
         const shareUrl = `localhost:8080/event/${body.id}`
@@ -38,7 +39,6 @@ class App extends React.Component {
   render() {
 
     return (
-
         <main>
           <header className="app__header">
             <h1 className="app__title">Beer?</h1>

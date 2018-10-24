@@ -20,7 +20,8 @@ class App extends React.Component {
     this.state = {
       createdEvent: {},
       urlToShare: "", //populated by createNewEvent when form is submitted
-      isMember: "false", // populated by userRegister when username is submitted
+      isMember: "false", // controlled by registerUser when name submitted
+      memberName: "",
       eventData: {
         memberName: "",
         date: "",
@@ -98,7 +99,8 @@ class App extends React.Component {
       })
   }
 
-  userRegister() {
+  registerUser(e) {
+    e.preventDefault();
     // push user to database
     // get back the memberId and memberName
     // set isMember in state to true
@@ -118,7 +120,7 @@ class App extends React.Component {
           />
 
           <Route path="/event/:eventId" render={({ match, history }) => {
-            return <UserView />
+            return <UserView isMember={this.state.isMember} registerUser={this.registerUser} />
           }}
           />
           <Footer />

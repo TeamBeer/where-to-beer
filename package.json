@@ -7,7 +7,8 @@
     "test": "jest",
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -57,5 +58,10 @@
       "@babel/preset-react",
       "@babel/preset-env"
     ]
+  },
+  "engines": {
+    "node": "10.11.0"
   }
+
+
 }

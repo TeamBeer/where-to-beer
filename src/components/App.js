@@ -109,9 +109,6 @@ class App extends React.Component {
 
   render() {
 
-    const unique = this.uniqueEventName();
-    console.log(unique)
-
     return (
 
       <Router>

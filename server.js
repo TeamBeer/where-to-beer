@@ -126,6 +126,18 @@ app.post('/api/member', (req, res) => {
     })
 })
 
+// GET :: Member details
+app.get('/api/member/:memberId', (req, res) => {
+  const memberId = req.params.memberId
+  db.one('SELECT * FROM member WHERE id = $1', [memberId])
+    .then(memberDetails => res.json(memberDetails))
+    .catch((error) => {
+      res.json({ error: error.message })
+    })
+  })
+
+
+
 app.use((req, res) => {
   res.render('index');
 });

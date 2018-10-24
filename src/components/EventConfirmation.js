@@ -12,7 +12,7 @@ function EventConfirmation({urlToShare, createdEvent}){
           <section className="organiserConfirm">
 
               <header className="confirm__header">
-                  <h2 className="confirm_title">Let's meet on {formatDate(createdEvent.event.date_time, 'ddd D MMMM YYYY')}</h2>
+                  <h2 className="confirm_title">Let's meet on {formatDate(createdEvent.event.date_time, 'ddd D MMMM YYYY')} at {formatDate(createdEvent.event.date_time, 'h M a')}</h2>
               </header>
 
               <section className="confirm__suggestion">

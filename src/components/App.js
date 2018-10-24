@@ -1,8 +1,11 @@
 import React from "react";
+import Header from "./Header"
+import Footer from "./Footer"
 import EventCreate from "./EventCreate";
 import '../styles/base/base.scss';
 import '../styles/components/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 class App extends React.Component {
   constructor() {
@@ -70,8 +73,9 @@ class App extends React.Component {
 
   render() {
     return (
+    <Router>
       <main>
-        <Router>
+
           <Header />
           <Route path="/" exact render={() => {
             <OrganiserView />
@@ -83,8 +87,9 @@ class App extends React.Component {
           }}
           />
           <Footer />
-        </Router>
+
       </main>
+    </Router>
     )
   }
 }

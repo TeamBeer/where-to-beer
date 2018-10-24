@@ -14,4 +14,8 @@ __Team members__: Phil Berryman, Joe Lamb, Mel Ashby, Dan Geraghty
 
 ## Future Plans
 
+<<<<<<< HEAD
 *
+=======
+* 
+>>>>>>> 0d0896b06f89552406ae9df917e83166a0c9ba5f

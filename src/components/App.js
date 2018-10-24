@@ -4,18 +4,24 @@ import Footer from "./Footer"
 import '../styles/base/base.scss';
 import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
+
 const {adjArr, nounArr} = require('../wordarrays.js');
+
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
+
 
 const shortid = require('shortid')
 
 import '../styles/components/App.scss';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      createdEvent: {},
       urlToShare: "", //populated by createNewEvent when form is submitted
 
       eventData: {
@@ -57,20 +63,8 @@ class App extends React.Component {
     delete eventData.date;
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
-    console.log(eventData)
     this.createNewEvent(eventData);
-    this.setState({
-      display: 'confirmation',
-      eventData: {
-        memberName: "",
-        date: "",
-        time: "19:00",
-        venueName: "",
-        venuePostcode: "",
-        eventReason: ""
-      }
-    })
-  }
+}
 
   uniqueEventName() {
     const adjectives = adjArr;
@@ -95,7 +89,17 @@ class App extends React.Component {
         console.log(body)
         const urlToShare = `localhost:8080/event/${body.event.name}`
         this.setState({
-          urlToShare
+          urlToShare,
+          createdEvent: body,
+          display: 'confirmation',
+          eventData: {
+            memberName: "",
+            date: "",
+            time: "19:00",
+            venueName: "",
+            venuePostcode: "",
+            eventReason: ""
+          }
         })
       })
       .catch(error => {
@@ -106,22 +110,24 @@ class App extends React.Component {
   render() {
 
     return (
-    <Router>
-      <main>
+
+      <Router>
+        <main>
+
           <Header />
-          <Route path="/" exact render={() => {
-            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display}/>
+          <Route path="/" exact render={({ match, history }) => {
+            return <OrganiserView createdEvent={this.state.createdEvent} eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display} />
           }}
           />
 
-          <Route path="/event/:eventId" render={() => {
+          <Route path="/event/:eventId" render={({ match, history }) => {
             return <UserView />
           }}
           />
           <Footer />
 
-      </main>
-    </Router>
+        </main>
+      </Router>
     )
   }
 }

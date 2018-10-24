@@ -2,7 +2,7 @@ import React from 'react';
 import EventCreate from './EventCreate';
 import EventConfirmation from './EventConfirmation';
 
-const OrganiserView = ({eventData, handleChange, onSubmit, display, urlToShare}) => {
+const OrganiserView = ({createdEvent, eventData, handleChange, onSubmit, display, urlToShare}) => {
   return (
     <React.Fragment>
 
@@ -11,8 +11,8 @@ const OrganiserView = ({eventData, handleChange, onSubmit, display, urlToShare})
       : null
       }
 
-      {display === "confirmation"
-      ? <EventConfirmation  urlToShare={urlToShare}/>
+      {display === "confirmation" && createdEvent
+      ? <EventConfirmation  createdEvent={createdEvent} urlToShare={urlToShare}/>
       : null
       }
 

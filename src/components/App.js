@@ -39,7 +39,7 @@ class App extends React.Component {
     this.createNewEvent = this.createNewEvent.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.uniqueEventName = this.uniqueEventName.bind(this);    
+    this.uniqueEventName = this.uniqueEventName.bind(this);
   }
 
   handleChange(event) {
@@ -64,17 +64,6 @@ class App extends React.Component {
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
     this.createNewEvent(eventData);
-    this.setState({
-      display: 'confirmation',
-      eventData: {
-        memberName: "",
-        date: "",
-        time: "19:00",
-        venueName: "",
-        venuePostcode: "",
-        venueReason: ""
-      }
-    })
   }
 
 

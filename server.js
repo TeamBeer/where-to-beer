@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
 const app = express();
 const db = pgp({
-    host: 'localhost',
+    host: process.env.DB_HOST||'localhost',
     port: 5432,
     database: process.env.DB_NAME,
     user: process.env.DB_USERNAME,

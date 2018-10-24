@@ -4,11 +4,14 @@ import Footer from "./Footer"
 import '../styles/base/base.scss';
 import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
+
+const { adjArr, nounArr } = require('../wordarrays.js');
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
-const shortid = require('shortid')
 
+const shortid = require('shortid')
 
 import '../styles/components/App.scss';
 
@@ -28,7 +31,7 @@ class App extends React.Component {
         time: "19:00",
         venueName: "",
         venuePostcode: "",
-        eventReason: ""
+        venueReason: ""
       },
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
@@ -37,6 +40,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
+    this.uniqueEventName = this.uniqueEventName.bind(this);
   }
 
   handleChange(event) {
@@ -65,6 +69,13 @@ class App extends React.Component {
 
 
 
+  uniqueEventName() {
+    const adjectives = adjArr;
+    const nouns = nounArr;
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
+    return `${adj}-${noun}`;
+  }
 
   // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
   createNewEvent(eventData) {
@@ -123,7 +134,9 @@ class App extends React.Component {
   }
 
   render() {
+
     return (
+
       <Router>
         <main>
 

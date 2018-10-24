@@ -20,8 +20,8 @@ class App extends React.Component {
     this.state = {
       createdEvent: {},
       urlToShare: "", //populated by createNewEvent when form is submitted
-      isMember: "false", // controlled by registerUser when name submitted
-      memberName: "",
+      isMember: false, // controlled by registerUser when name submitted
+      memberId: 0,
       eventData: {
         memberName: "",
         date: "",
@@ -30,13 +30,13 @@ class App extends React.Component {
         venuePostcode: "",
         eventReason: ""
       },
-
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
     this.createNewEvent = this.createNewEvent.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.registerUser = this.registerUser.bind(this);
   }
 
   handleChange(event) {
@@ -68,7 +68,6 @@ class App extends React.Component {
 
   // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
   createNewEvent(eventData) {
-    console.log("fetch")
     fetch('/api/event', {
       method: 'post',
       body: JSON.stringify(eventData),
@@ -78,14 +77,12 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => {
-        console.log(body)
         const urlToShare = `localhost:8080/event/${body.event.name}`
         this.setState({
           urlToShare,
           createdEvent: body,
           display: 'confirmation',
           eventData: {
-            memberName: "",
             date: "",
             time: "19:00",
             venueName: "",
@@ -99,8 +96,22 @@ class App extends React.Component {
       })
   }
 
-  registerUser(e) {
+  registerUser(e, memberName) {
     e.preventDefault();
+    const memberData = { memberName };
+    fetch('/api/member', {
+      method: 'post',
+      body: JSON.stringify(memberData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(body => this.setState({
+        memberId: body.memberId,
+        memberName: body.memberName
+      }))
+      .catch(error => console.log(error))
     // push user to database
     // get back the memberId and memberName
     // set isMember in state to true

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const CreateEvent = ({handleChange, onSubmit, eventData}) => {
+const EventCreate = ({handleChange, onSubmit, eventData}) => {
 
   const { memberName, date, time, venueName, venuePostcode, eventReason} = eventData
   return (
@@ -49,4 +49,4 @@ const CreateEvent = ({handleChange, onSubmit, eventData}) => {
 
 }
 
-export default CreateEvent;
+export default EventCreate;

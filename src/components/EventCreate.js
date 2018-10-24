@@ -2,6 +2,7 @@ import React from 'react';
 
 const EventCreate = ({handleChange, onSubmit, eventData}) => {
 
+
   const { memberName, date, time, venueName, venuePostcode, eventReason} = eventData
   return (
  <section className="organiserSetup">

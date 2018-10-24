@@ -2,10 +2,10 @@ import React from 'react';
 import EventCreate from './EventCreate';
 import EventConfirm from './EventConfirmation';
 
-const OrganiserView = () => {
+const OrganiserView = ({eventData, handleChange, onSubmit}) => {
   return (
     <React.Fragment>
-      <EventCreate eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} />
+      <EventCreate eventData={eventData} handleChange={handleChange} onSubmit={onSubmit} />
 
       <EventConfirm />
 

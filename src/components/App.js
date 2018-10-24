@@ -44,8 +44,19 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    // check localStorage for a memberId and set in state if exists and set isMember to true
-    // localStorage.getItem('memberId') !== undefined : 
+    if (!!localStorage.getItem('memberId')) {
+      const { memberId } = JSON.parse(localStorage.getItem('memberId'));
+      console.log(memberId);
+      fetch(`api/member/${memberId}`)
+        .then(response => response.json())
+        .then(body => {
+          this.setState({
+            isMember: true,
+            memberId: body.id,
+            memberName: body.name
+          })
+        })
+    }
   }
 
   handleChange(event) {
@@ -129,15 +140,12 @@ class App extends React.Component {
           memberId: body.id,
           memberName: body.name
         })
-
+        const member = JSON.stringify({ memberId: body.id })
+        console.log(member);
+        localStorage.setItem('memberId', member)
       })
       .catch(error => console.log(error))
 
-
-    // push user to database
-    // get back the memberId and memberName
-    // set isMember in state to true
-    // set memberId and memberName in state
     // push memberId and memberName to localStorage
   }
 

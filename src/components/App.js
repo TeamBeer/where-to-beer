@@ -5,7 +5,7 @@ import '../styles/base/base.scss';
 import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
 
-const {adjArr, nounArr} = require('../wordarrays.js');
+const { adjArr, nounArr } = require('../wordarrays.js');
 
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
@@ -23,7 +23,8 @@ class App extends React.Component {
     this.state = {
       createdEvent: {},
       urlToShare: "", //populated by createNewEvent when form is submitted
-
+      isMember: false, // controlled by registerUser when name submitted
+      memberId: 0,
       eventData: {
         memberName: "",
         date: "",
@@ -32,14 +33,19 @@ class App extends React.Component {
         venuePostcode: "",
         venueReason: ""
       },
-
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
     this.createNewEvent = this.createNewEvent.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
+  }
+
+  componentDidMount() {
+    // check localStorage for a memberId and set in state if exists and set isMember to true
+    // localStorage.getItem('memberId') !== undefined : 
   }
 
   handleChange(event) {
@@ -71,14 +77,13 @@ class App extends React.Component {
   uniqueEventName() {
     const adjectives = adjArr;
     const nouns = nounArr;
-    const adj = adjectives[Math.floor(Math.random()*adjectives.length)];
-    const noun = nouns[Math.floor(Math.random()*nouns.length)];
+    const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+    const noun = nouns[Math.floor(Math.random() * nouns.length)];
     return `${adj}-${noun}`;
   }
 
   // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
   createNewEvent(eventData) {
-    console.log("fetch")
     fetch('/api/event', {
       method: 'post',
       body: JSON.stringify(eventData),
@@ -88,14 +93,12 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => {
-        console.log(body)
         const urlToShare = `localhost:8080/event/${body.event.name}`
         this.setState({
           urlToShare,
           createdEvent: body,
           display: 'confirmation',
           eventData: {
-            memberName: "",
             date: "",
             time: "19:00",
             venueName: "",
@@ -107,6 +110,35 @@ class App extends React.Component {
       .catch(error => {
         console.log(error)
       })
+  }
+
+  registerUser(e, memberName) {
+    e.preventDefault();
+    const memberData = { memberName };
+    fetch('/api/member', {
+      method: 'post',
+      body: JSON.stringify(memberData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          isMember: true,
+          memberId: body.id,
+          memberName: body.name
+        })
+
+      })
+      .catch(error => console.log(error))
+
+
+    // push user to database
+    // get back the memberId and memberName
+    // set isMember in state to true
+    // set memberId and memberName in state
+    // push memberId and memberName to localStorage
   }
 
   render() {
@@ -123,7 +155,7 @@ class App extends React.Component {
           />
 
           <Route path="/event/:eventId" render={({ match, history }) => {
-            return <UserView />
+            return <UserView isMember={this.state.isMember} registerUser={this.registerUser} />
           }}
           />
           <Footer />

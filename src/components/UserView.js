@@ -1,12 +1,20 @@
 import React from 'react';
 import SuggestionList from './SuggestionList';
 import SuggestionCreate from './SuggestionCreate';
+import UserRegistration from './UserRegistration';
 
-const UserView = () => {
+const UserView = ({ isMember, registerUser, memberName }) => {
   return (
     <React.Fragment>
-      <SuggestionList />
-      <SuggestionCreate />
+      {!isMember &&
+        <UserRegistration registerUser={registerUser} />
+      }
+      {isMember &&
+        <React.Fragment>
+          <SuggestionList />
+          <SuggestionCreate />
+        </React.Fragment>
+      }
     </React.Fragment>
   )
 }

@@ -17,6 +17,7 @@ class App extends React.Component {
     super();
     this.state = {
       urlToShare: "", //populated by createNewEvent when form is submitted
+
       eventData: {
         memberName: "",
         eventName: "",
@@ -26,6 +27,8 @@ class App extends React.Component {
         venuePostcode: "",
         eventReason: ""
       },
+
+      display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
     this.createNewEvent = this.createNewEvent.bind(this)
@@ -55,6 +58,9 @@ class App extends React.Component {
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
     this.createNewEvent(eventData);
+    this.setState({
+      display: 'confirmation'
+    })
   }
 
 
@@ -89,7 +95,7 @@ class App extends React.Component {
 
           <Header />
           <Route path="/" exact render={() => {
-            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit}/>
+            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display}/>
           }}
           />
 

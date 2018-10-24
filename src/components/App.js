@@ -1,5 +1,9 @@
 import React from "react";
-import EventCreate from "./EventCreate";
+import EventConfirmation from "./EventConfirmation";
+
+
+import Header from "./Header";
+import Footer from "./Footer";
 import '../styles/base/base.scss';
 import '../styles/components/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';

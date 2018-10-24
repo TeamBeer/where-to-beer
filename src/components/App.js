@@ -142,8 +142,6 @@ class App extends React.Component {
         localStorage.setItem('memberId', member)
       })
       .catch(console.error)
-
-    // push memberId and memberName to localStorage
   }
 
   render() {

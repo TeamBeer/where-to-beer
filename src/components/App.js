@@ -59,7 +59,7 @@ class App extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    const eventName = shortid.generate()
+    const eventName = this.uniqueEventName()
     //  concatenate the date and time in the eventTime object iso 8601 date format
     const { date, time } = this.state.eventData;
     const dateTime = `${date}T${time}:00`;

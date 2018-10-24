@@ -1,22 +1,25 @@
 import React from "react";
 
+const formatDate = require('date-fns/format')
 
-function EventConfirmation({urlToShare}){
+
+function EventConfirmation({urlToShare, createdEvent}){
 
       return (
+
         <React.Fragment>
 
           <section className="organiserConfirm">
 
               <header className="confirm__header">
-                  <h2 className="confirm_title">Let's meet on Friday 26 October at 7pm</h2>
+                  <h2 className="confirm_title">Let's meet on {formatDate(createdEvent.event.date_time, 'ddd D MMMM YYYY')} at {formatDate(createdEvent.event.date_time, 'h M a')}</h2>
               </header>
 
               <section className="confirm__suggestion">
                 <h3>Your suggestion</h3>
-                <h4 className="suggestion_subtitle">The Star and Garter<span>W1F 7NX</span></h4>
+                <h4 className="suggestion_subtitle">{createdEvent.suggestions[0].venue_name}</h4><span><h4>{createdEvent.suggestions[0].postcode}</h4></span>
                   <p className="suggestion_description">
-                    It's got a nice  quiet room upstairs so we should get a seat
+                    {createdEvent.suggestions[0].reason}
                   </p>
                   <button className="confirm__editbtn btn">Edit</button>
                   <button className="confirm__linkbtn btn">Get Invite Link</button>

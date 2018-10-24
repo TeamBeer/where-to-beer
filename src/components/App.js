@@ -4,13 +4,14 @@ import Footer from "./Footer"
 import '../styles/base/base.scss';
 import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
 const shortid = require('shortid')
 
 
 import '../styles/components/App.scss';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 
 class App extends React.Component {
@@ -100,23 +101,23 @@ class App extends React.Component {
 
   render() {
     return (
-    <Router>
-      <main>
+      <Router>
+        <main>
 
           <Header />
-          <Route path="/" exact render={() => {
-            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display}/>
+          <Route path="/" exact render={({ match, history }) => {
+            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display} />
           }}
           />
 
-          <Route path="/event/:eventId" render={() => {
+          <Route path="/event/:eventId" render={({ match, history }) => {
             return <UserView />
           }}
           />
           <Footer />
 
-      </main>
-    </Router>
+        </main>
+      </Router>
     )
   }
 }

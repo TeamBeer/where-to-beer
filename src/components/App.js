@@ -46,8 +46,7 @@ class App extends React.Component {
   componentDidMount() {
     if (!!localStorage.getItem('memberId')) {
       const { memberId } = JSON.parse(localStorage.getItem('memberId'));
-      console.log(memberId);
-      fetch(`api/member/${memberId}`)
+      fetch(`/api/member/${memberId}`)
         .then(response => response.json())
         .then(body => {
           this.setState({
@@ -56,6 +55,7 @@ class App extends React.Component {
             memberName: body.name
           })
         })
+        .catch(console.error)
     }
   }
 
@@ -118,9 +118,7 @@ class App extends React.Component {
           }
         })
       })
-      .catch(error => {
-        console.log(error)
-      })
+      .catch(console.error)
   }
 
   registerUser(e, memberName) {
@@ -141,10 +139,9 @@ class App extends React.Component {
           memberName: body.name
         })
         const member = JSON.stringify({ memberId: body.id })
-        console.log(member);
         localStorage.setItem('memberId', member)
       })
-      .catch(error => console.log(error))
+      .catch(console.error)
 
     // push memberId and memberName to localStorage
   }

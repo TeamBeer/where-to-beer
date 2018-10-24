@@ -43,6 +43,11 @@ class App extends React.Component {
     this.uniqueEventName = this.uniqueEventName.bind(this);
   }
 
+  componentDidMount() {
+    // check localStorage for a memberId and set in state if exists and set isMember to true
+    // localStorage.getItem('memberId') !== undefined : 
+  }
+
   handleChange(event) {
     this.setState({
       eventData: Object.assign(
@@ -119,12 +124,12 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => {
-        console.log(body);
         this.setState({
           isMember: true,
           memberId: body.id,
           memberName: body.name
         })
+
       })
       .catch(error => console.log(error))
 

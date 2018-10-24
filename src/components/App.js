@@ -1,12 +1,10 @@
 import React from "react";
-import EventConfirmation from "./EventConfirmation";
-
-
-import Header from "./Header";
-import Footer from "./Footer";
+import Header from "./Header"
+import Footer from "./Footer"
 import '../styles/base/base.scss';
 import '../styles/components/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+
 
 class App extends React.Component {
   constructor() {
@@ -74,8 +72,9 @@ class App extends React.Component {
 
   render() {
     return (
+    <Router>
       <main>
-        <Router>
+
           <Header />
           <Route path="/" exact render={() => {
             <OrganiserView />
@@ -87,8 +86,9 @@ class App extends React.Component {
           }}
           />
           <Footer />
-        </Router>
+
       </main>
+    </Router>
     )
   }
 }

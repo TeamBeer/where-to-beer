@@ -1,5 +1,6 @@
 import React from "react";
 import EventCreate from "./EventCreate";
+import '../styles/base/base.scss';
 import '../styles/components/App.scss';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 

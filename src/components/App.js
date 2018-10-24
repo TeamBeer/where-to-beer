@@ -1,7 +1,11 @@
 import React from "react";
 import Header from "./Header"
 import Footer from "./Footer"
-import EventCreate from "./EventCreate";
+import OrganiserView from "./OrganiserView"
+import UserView from "./UserView"
+
+
+const shortid = require('shortid')
 
 
 import '../styles/components/App.scss';
@@ -15,7 +19,7 @@ class App extends React.Component {
       urlToShare: "", //populated by createNewEvent when form is submitted
       eventData: {
         memberName: "",
-        eventName: "electric-dog",
+        eventName: "",
         date: "",
         time: "19:00",
         venueName: "",
@@ -40,15 +44,17 @@ class App extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
+    const eventName = shortid.generate()
     //  concatenate the date and time in the eventTime object iso 8601 date format
     const { date, time } = this.state.eventData;
     const dateTime = `${date}T${time}:00`;
     const eventData = Object.assign({}, this.state.eventData, { dateTime })
+    eventData.eventName = eventName
     // clean up eventData object to fit {memberName, eventName, dateTime, venueName, venuePostcode, venueReason} shape
     delete eventData.date;
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
-    // createNewEvent(eventData);
+    this.createNewEvent(eventData);
   }
 
 
@@ -56,19 +62,23 @@ class App extends React.Component {
 
   // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
   createNewEvent(eventData) {
+    console.log("fetch")
     fetch('/api/event', {
       method: 'post',
-      body: JSON.stringify(json.stringify(eventData)),
+      body: JSON.stringify(eventData),
       headers: {
         'Content-Type': 'application/json'
       }
     })
       .then(response => response.json())
       .then(body => {
-        const shareUrl = `localhost:8080/event/${body.id}`
+        const urlToShare = `localhost:8080/event/${body.id}`
         this.setState({
-          shareURL
+          urlToShare
         })
+      })
+      .catch(error => {
+        console.log(error)
       })
   }
 
@@ -79,12 +89,12 @@ class App extends React.Component {
 
           <Header />
           <Route path="/" exact render={() => {
-            <OrganiserView />
+            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit}/>
           }}
           />
 
           <Route path="/event/:eventId" render={() => {
-            <UserView />
+            return <UserView />
           }}
           />
           <Footer />

@@ -1,11 +1,12 @@
 import React from "react";
 import CreateEvent from "./CreateEvent";
-import '../styles/components/app.scss';
+import '../styles/components/App.scss';
 
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      urlToShare: "", //populated by createNewEvent when form is submitted
       eventData: {
         memberName: "",
         eventName: "electric-dog",
@@ -17,6 +18,7 @@ class App extends React.Component {
       },
     }
 
+    this.createNewEvent = this.createNewEvent.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
@@ -44,8 +46,27 @@ class App extends React.Component {
   }
 
 
-  render() {
 
+
+// On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
+  createNewEvent(eventData){
+    fetch('/api/event', {
+      method: 'post',
+      body: JSON.stringify(json.stringify(eventData)),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(body => {
+        const shareUrl = `localhost:8080/event/${body.id}`
+        this.setState({
+          shareURL
+        })
+      })
+    }
+
+  render(){
     return (
 
       <main>
@@ -81,7 +102,10 @@ class App extends React.Component {
 
     )
 
+
   }
+
+
 
 }
 

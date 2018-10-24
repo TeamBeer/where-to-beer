@@ -9,7 +9,6 @@ class App extends React.Component {
 
   this.state = {
     urlToShare: "", //populated by createNewEvent when form is submitted
-    formData: {}  //populated by form submit
   }
 
   }
@@ -17,10 +16,10 @@ class App extends React.Component {
 
 
 // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
-  createNewEvent(){
+  createNewEvent(eventData){
     fetch('/api/event', {
       method: 'post',
-      body: JSON.stringify(this.state.formData),
+      body: JSON.stringify(json.stringify(eventData)),
       headers: {
         'Content-Type': 'application/json'
       }

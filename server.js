@@ -1,17 +1,22 @@
 require('dotenv').config();
 
 const express = require('express');
+
 const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
+
 const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 const db = pgp({
   host: process.env.DB_HOST || 'localhost',
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD
-
 });
+
 
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
@@ -34,7 +39,6 @@ const getEventFromDb = (eventId) => {
 // This endpoint creates an entry in member, event, member_event and suggestion tables
 app.post('/api/event', (req, res) => {
   const { memberName, eventName, dateTime, venueName, venuePostcode, venueReason } = req.body
-  console.log(req.body)
   Promise.all([
     db.one('INSERT INTO member (name) VALUES ($1) RETURNING id', [memberName]),
     db.one('INSERT INTO event (name, date_time) VALUES ($1, $2) RETURNING id', [eventName, dateTime])
@@ -134,7 +138,7 @@ app.get('/api/member/:memberId', (req, res) => {
     .catch((error) => {
       res.json({ error: error.message })
     })
-  })
+})
 
 
 
@@ -143,10 +147,20 @@ app.use((req, res) => {
 });
 
 
+io.on('connection', socket => {
+  console.log('User connected');
+  console.log(socket.id);
+  socket.on('SEND_MESSAGE', function (data) {
+    io.emit('RECEIVE_MESSAGE', data);
+  })
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected')
+  })
+})
+
 const port = process.env.PORT || 8080;
-app.listen(port, function () {
+http.listen(port, function () {
   console.log(`Listening on port number ${port}`);
 
 });
-
-

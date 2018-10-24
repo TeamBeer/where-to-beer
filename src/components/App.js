@@ -1,4 +1,6 @@
 import React from "react";
+import io from "socket.io-client";
+
 import Header from "./Header"
 import Footer from "./Footer"
 import '../styles/base/base.scss';
@@ -6,16 +8,9 @@ import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
 
 const { adjArr, nounArr } = require('../wordarrays.js');
-
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-
-
-const shortid = require('shortid')
-
 import '../styles/components/App.scss';
-
-
 
 class App extends React.Component {
   constructor() {
@@ -35,12 +30,21 @@ class App extends React.Component {
       },
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
-
     this.createNewEvent = this.createNewEvent.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
+
+    this.socket = io('http://localhost:8080');
+
+    this.socket.on('RECEIVE_MESSAGE', function (data) {
+      addMessage(data);
+    });
+    const addMessage = data => {
+      console.log(data);
+      this.setState({ registeredUser: data.user })
+    };
   }
 
   componentDidMount() {
@@ -71,8 +75,6 @@ class App extends React.Component {
     // pass eventData object to createNewEvent on database function
     this.createNewEvent(eventData);
   }
-
-
 
   uniqueEventName() {
     const adjectives = adjArr;
@@ -114,6 +116,11 @@ class App extends React.Component {
 
   registerUser(e, memberName) {
     e.preventDefault();
+
+    this.socket.emit('SEND_MESSAGE', {
+      user: memberName
+    })
+
     const memberData = { memberName };
     fetch('/api/member', {
       method: 'post',
@@ -132,8 +139,6 @@ class App extends React.Component {
 
       })
       .catch(error => console.log(error))
-
-
     // push user to database
     // get back the memberId and memberName
     // set isMember in state to true

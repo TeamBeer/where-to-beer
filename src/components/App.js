@@ -20,7 +20,7 @@ class App extends React.Component {
     this.state = {
       createdEvent: {},
       urlToShare: "", //populated by createNewEvent when form is submitted
-
+      isMember: "false", // populated by userRegister when username is submitted
       eventData: {
         memberName: "",
         date: "",
@@ -60,7 +60,7 @@ class App extends React.Component {
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
     this.createNewEvent(eventData);
-}
+  }
 
 
 
@@ -96,6 +96,14 @@ class App extends React.Component {
       .catch(error => {
         console.log(error)
       })
+  }
+
+  userRegister() {
+    // push user to database
+    // get back the memberId and memberName
+    // set isMember in state to true
+    // set memberId and memberName in state
+    // push memberId and memberName to localStorage
   }
 
   render() {

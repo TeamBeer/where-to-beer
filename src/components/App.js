@@ -108,10 +108,13 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => this.setState({
+        isMember: true,
         memberId: body.memberId,
         memberName: body.memberName
       }))
       .catch(error => console.log(error))
+
+
     // push user to database
     // get back the memberId and memberName
     // set isMember in state to true

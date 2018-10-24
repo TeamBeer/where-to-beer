@@ -4,11 +4,14 @@ import Footer from "./Footer"
 import '../styles/base/base.scss';
 import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
+
+const {adjArr, nounArr} = require('../wordarrays.js');
+
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 
-const shortid = require('shortid')
 
+const shortid = require('shortid')
 
 import '../styles/components/App.scss';
 
@@ -18,6 +21,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
+      createdEvent: {},
       urlToShare: "", //populated by createNewEvent when form is submitted
 
       eventData: {
@@ -35,6 +39,7 @@ class App extends React.Component {
     this.createNewEvent = this.createNewEvent.bind(this)
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+    this.uniqueEventName = this.uniqueEventName.bind(this);    
   }
 
   handleChange(event) {
@@ -58,7 +63,6 @@ class App extends React.Component {
     delete eventData.date;
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
-    console.log(eventData)
     this.createNewEvent(eventData);
     this.setState({
       display: 'confirmation',
@@ -75,6 +79,13 @@ class App extends React.Component {
 
 
 
+  uniqueEventName() {
+    const adjectives = adjArr;
+    const nouns = nounArr;
+    const adj = adjectives[Math.floor(Math.random()*adjectives.length)];
+    const noun = nouns[Math.floor(Math.random()*nouns.length)];
+    return `${adj}-${noun}`;
+  }
 
   // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
   createNewEvent(eventData) {
@@ -91,7 +102,17 @@ class App extends React.Component {
         console.log(body)
         const urlToShare = `localhost:8080/event/${body.event.name}`
         this.setState({
-          urlToShare
+          urlToShare,
+          createdEvent: body,
+          display: 'confirmation',
+          eventData: {
+            memberName: "",
+            date: "",
+            time: "19:00",
+            venueName: "",
+            venuePostcode: "",
+            eventReason: ""
+          }
         })
       })
       .catch(error => {
@@ -100,13 +121,18 @@ class App extends React.Component {
   }
 
   render() {
+
+    const unique = this.uniqueEventName();
+    console.log(unique)
+
     return (
+
       <Router>
         <main>
 
           <Header />
           <Route path="/" exact render={({ match, history }) => {
-            return <OrganiserView eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display} />
+            return <OrganiserView createdEvent={this.state.createdEvent} eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display} />
           }}
           />
 

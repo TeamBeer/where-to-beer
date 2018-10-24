@@ -3,7 +3,7 @@ import React from 'react';
 const EventCreate = ({handleChange, onSubmit, eventData}) => {
 
 
-  const { memberName, date, time, venueName, venuePostcode, eventReason} = eventData
+  const { memberName, date, time, venueName, venuePostcode, venueReason} = eventData
   return (
  <section className="organiserSetup">
           <header className="setup__header">
@@ -39,7 +39,7 @@ const EventCreate = ({handleChange, onSubmit, eventData}) => {
             </div>
             <div>
               <label className="ssetupform__commentlabel" htmlFor="comment">Comment</label>
-              <textarea className="setupform__comment" onChange={e => handleChange(e)} name="eventReason" value={eventReason} placeholder="Comment (optional)"></textarea>
+              <textarea className="setupform__comment" onChange={e => handleChange(e)} name="venueReason" value={venueReason} placeholder="Comment (optional)"></textarea>
             </div>
             <div>
               <button className="btn btn__submit" type="submit">Create</button>

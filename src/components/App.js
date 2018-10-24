@@ -26,7 +26,7 @@ class App extends React.Component {
         time: "19:00",
         venueName: "",
         venuePostcode: "",
-        eventReason: ""
+        venueReason: ""
       },
 
       display: "creation" //'creation' or 'confirmation' or 'userView'
@@ -68,7 +68,7 @@ class App extends React.Component {
         time: "19:00",
         venueName: "",
         venuePostcode: "",
-        eventReason: ""
+        venueReason: ""
       }
     })
   }

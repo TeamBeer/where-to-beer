@@ -30,7 +30,7 @@ class App extends React.Component {
         time: "19:00",
         venueName: "",
         venuePostcode: "",
-        eventReason: ""
+        venueReason: ""
       },
 
       display: "creation" //'creation' or 'confirmation' or 'userView'
@@ -64,7 +64,20 @@ class App extends React.Component {
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
     this.createNewEvent(eventData);
-}
+    this.setState({
+      display: 'confirmation',
+      eventData: {
+        memberName: "",
+        date: "",
+        time: "19:00",
+        venueName: "",
+        venuePostcode: "",
+        venueReason: ""
+      }
+    })
+  }
+
+
 
   uniqueEventName() {
     const adjectives = adjArr;

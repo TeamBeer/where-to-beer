@@ -34,6 +34,7 @@ const getEventFromDb = (eventId) => {
 // This endpoint creates an entry in member, event, member_event and suggestion tables
 app.post('/api/event', (req, res) => {
   const { memberName, eventName, dateTime, venueName, venuePostcode, venueReason } = req.body
+  console.log(req.body)
   Promise.all([
     db.one('INSERT INTO member (name) VALUES ($1) RETURNING id', [memberName]),
     db.one('INSERT INTO event (name, date_time) VALUES ($1, $2) RETURNING id', [eventName, dateTime])

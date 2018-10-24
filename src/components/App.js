@@ -118,11 +118,14 @@ class App extends React.Component {
       }
     })
       .then(response => response.json())
-      .then(body => this.setState({
-        isMember: true,
-        memberId: body.memberId,
-        memberName: body.memberName
-      }))
+      .then(body => {
+        console.log(body);
+        this.setState({
+          isMember: true,
+          memberId: body.id,
+          memberName: body.name
+        })
+      })
       .catch(error => console.log(error))
 
 

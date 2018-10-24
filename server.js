@@ -5,11 +5,11 @@ const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
 const app = express();
 const db = pgp({
-    host: process.env.DB_HOST||'localhost',
-    port: 5432,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USERNAME,
-    password: process.env.DB_PASSWORD
+  host: process.env.DB_HOST || 'localhost',
+  port: 5432,
+  database: process.env.DB_NAME,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD
 
 });
 
@@ -119,8 +119,8 @@ app.delete('/api/vote/:voteId', (req, res) => {
 // POST :: New Member
 app.post('/api/member', (req, res) => {
   const { memberName } = req.body
-  db.one('INSERT INTO member (name) VALUES ($1) RETURNING id', [memberName])
-    .then(memberId => res.json(memberId))
+  db.one('INSERT INTO member (name) VALUES ($1) RETURNING id, name', [memberName])
+    .then(memberDetails => res.json(memberDetails))
     .catch(error => {
       res.json({ error: error.message });
     })
@@ -132,7 +132,7 @@ app.use((req, res) => {
 
 
 const port = process.env.PORT || 8080;
-app.listen( port, function(){
+app.listen(port, function () {
   console.log(`Listening on port number ${port}`);
 
 });

@@ -21,7 +21,6 @@ class App extends React.Component {
 
       eventData: {
         memberName: "",
-        eventName: "",
         date: "",
         time: "19:00",
         venueName: "",
@@ -58,9 +57,18 @@ class App extends React.Component {
     delete eventData.date;
     delete eventData.time;
     // pass eventData object to createNewEvent on database function
+    console.log(eventData)
     this.createNewEvent(eventData);
     this.setState({
-      display: 'confirmation'
+      display: 'confirmation',
+      eventData: {
+        memberName: "",
+        date: "",
+        time: "19:00",
+        venueName: "",
+        venuePostcode: "",
+        eventReason: ""
+      }
     })
   }
 
@@ -79,7 +87,8 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => {
-        const urlToShare = `localhost:8080/event/${body.id}`
+        console.log(body)
+        const urlToShare = `localhost:8080/event/${body.event.name}`
         this.setState({
           urlToShare
         })

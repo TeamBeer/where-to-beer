@@ -116,6 +116,16 @@ app.delete('/api/vote/:voteId', (req, res) => {
     })
 })
 
+// POST :: New Member
+app.post('/api/member', (req, res) => {
+  const { memberName } = req.body
+  db.one('INSERT INTO member (name) VALUES ($1) RETURNING id', [memberName])
+    .then(memberId => res.json(memberId))
+    .catch(error => {
+      res.json({ error: error.message });
+    })
+})
+
 app.use((req, res) => {
   res.render('index');
 });

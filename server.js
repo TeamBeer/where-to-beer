@@ -22,7 +22,6 @@ app.get('/', function(req, res){
 
 // This function is shared by both the Post and Get routes for event
 const getEventFromDb = (eventId) => {
-  console.log('getEventFromDb')
   return Promise.all([
     db.one('SELECT * FROM event WHERE id = $1',[eventId]),
     db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name FROM suggestion, member WHERE event_id = $1 AND suggestion.member_id = member.id', [eventId]),
@@ -59,11 +58,8 @@ app.post('/api/event', (req, res) => {
 app.put('/api/event/:eventId', (req, res) => {
   const eventId = req.params.eventId
   const {name} = req.body
-  console.log(`api.put req.body :: ${req.body}`)
-  console.log(`api.put eventId :: ${eventId}`)
   db.one('UPDATE event SET name = ($1) WHERE id = $2 RETURNING id', [name, eventId])
   .then(updatedEventId => {
-    console.log(`api.put :: ${updatedEventId}`)
     res.json(updatedEventId)
   })
   .catch((error) => {
@@ -77,13 +73,10 @@ app.put('/api/event/:eventId', (req, res) => {
 // This endpoint creates an object containing event details (from event table) and suggestions for that event (from suggestions table)
 app.get('/api/event/:eventId', (req, res) => {
   const eventId = req.params.eventId
-  console.log(eventId)
   getEventFromDb(eventId).then((eventData)=> {
-    console.log(eventData)
     res.json(eventData)
   })
   .catch((error)=>{
-    console.log('aaa' + eventId)
     res.json({error: error.message})
   })
 })
@@ -117,7 +110,6 @@ app.post('/api/vote', (req, res) => {
 
 app.delete('/api/vote/:voteId', (req,res) => {
   const voteId = req.params.voteId;
-  console.log('hello' + voteId)
   db.none('DELETE FROM vote where id = $1', [voteId])
   .then(()=> res.status(204).json({message: 'vote deleted'}))
   .catch(error => {

@@ -1,13 +1,20 @@
 import React from 'react';
 import EventCreate from './EventCreate';
-import EventConfirm from './EventConfirmation';
+import EventConfirmation from './EventConfirmation';
 
-const OrganiserView = ({eventData, handleChange, onSubmit}) => {
+const OrganiserView = ({eventData, handleChange, onSubmit, display, urlToShare}) => {
   return (
     <React.Fragment>
-      <EventCreate eventData={eventData} handleChange={handleChange} onSubmit={onSubmit} />
 
-      <EventConfirm />
+      {display === 'creation'
+      ? <EventCreate eventData={eventData} handleChange={handleChange} onSubmit={onSubmit} />
+      : null
+      }
+
+      {display === "confirmation"
+      ? <EventConfirmation  urlToShare={urlToShare}/>
+      : null
+      }
 
     </React.Fragment>
   )

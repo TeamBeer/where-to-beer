@@ -1,7 +1,6 @@
 import React from "react";
 
-function Suggestion() {
-
+const Suggestion = ({suggestion, votes}) => {
   return (
     <React.Fragment>
 
@@ -9,22 +8,23 @@ function Suggestion() {
 
         <header className="suggestion_header">
           <h3 className="suggestion_title">
-            <span className="suggestion_kicker">Joe suggests&hellip;</span>The Star and Garter
+            <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span>{suggestion.venue_name}
                   </h3>
           <button className="btn btn__vote">+</button>
         </header>
 
         <p className="suggestion_description">
-          It's got a nice  quiet room upstairs so we should get a seat
+          {suggestion.reason}
               </p>
 
         <footer className="suggestion_footer">
           <div className="suggestion_votes">
-            <span className="suggestion_count">2</span> Votes
+            <span className="suggestion_count">{votes.length}</span> Votes
                   </div>
           <ul className="suggestion_voters">
-            <li className="suggestion_voter">P</li>
-            <li>M</li>
+          {votes.map(vote => {
+            return <li className="suggestion_voter">{vote.memberName}</li>
+          })}
           </ul>
         </footer>
 

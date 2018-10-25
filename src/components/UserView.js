@@ -3,7 +3,8 @@ import SuggestionList from './SuggestionList';
 import SuggestionCreate from './SuggestionCreate';
 import UserRegistration from './UserRegistration';
 
-const UserView = ({ isMember, registerUser, memberName }) => {
+const UserView = ({ isMember, registerUser, memberName, event, suggestions, votes, eventId }) => {
+  console.log(eventId)
   return (
     <React.Fragment>
       {!isMember &&
@@ -11,7 +12,7 @@ const UserView = ({ isMember, registerUser, memberName }) => {
       }
       {isMember &&
         <React.Fragment>
-          <SuggestionList />
+          <SuggestionList eventId={eventId} event={event} suggestions={suggestions} votes={votes} />
           <SuggestionCreate />
         </React.Fragment>
       }

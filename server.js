@@ -19,14 +19,14 @@ app.set('view engine', 'hbs');
 
 
 // This function is shared by both the Post and Get routes for event
-const getEventFromDb = (eventId) => {
+const getEventFromDb = (eventName) => {
   return Promise.all([
-    db.one('SELECT * FROM event WHERE id = $1', [eventId]),
-    db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name FROM suggestion, member WHERE event_id = $1 AND suggestion.member_id = member.id', [eventId]),
-    db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event_id = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = suggestion.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventId])
+    db.one('SELECT * FROM event WHERE name = $1', [eventName]),
+    db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id, event.id FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),
+    db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = suggestion.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
   ])
-    .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes })
-    )
+    .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes }))
+    .catch((error) => {console.log(error)})
 }
 
 
@@ -43,7 +43,7 @@ app.post('/api/event', (req, res) => {
         db.none('INSERT INTO member_event (member_id, event_id) VALUES ($1, $2)', [memberId.id, eventId.id]),
         db.one('INSERT INTO suggestion (member_id, event_id, venue_name, reason, postcode) VALUES ($1, $2, $3, $4, $5) RETURNING id', [memberId.id, eventId.id, venueName, venueReason, venuePostcode])
       ])
-        .then(() => getEventFromDb(eventId.id))
+        .then(() => getEventFromDb(eventName))
         .then((eventData) => res.json(eventData))
     })
     .catch((error) => {

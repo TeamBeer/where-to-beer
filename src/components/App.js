@@ -25,27 +25,23 @@ class App extends React.Component {
       urlToShare: "", //populated by createNewEvent when form is submitted
       isMember: false, // controlled by registerUser when name submitted
       memberId: 0,
-      eventData: {
-        memberName: "",
-        date: "",
-        time: "19:00",
-        venueName: "",
-        venuePostcode: "",
-        venueReason: ""
-      },
-      event: {},
-      suggestions: {},
-      votes: {},
+      event:{},
+      suggestions:{},
+      votes:{},
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
     this.createNewEvent = this.createNewEvent.bind(this)
-    this.handleChange = this.handleChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
     this.createNewSuggestion = this.createNewSuggestion.bind(this);
   }
+
+  componentDidMount() {
+    this.initialFetch()
+  }
+
+
   initialFetch() {
     if (localStorage.getItem('memberId')) {
       const { memberId } = JSON.parse(localStorage.getItem('memberId'));
@@ -62,34 +58,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    this.initialFetch()
-  }
 
-
-  handleChange(event) {
-    this.setState({
-      eventData: Object.assign(
-        {},
-        this.state.eventData,
-        { [event.target.name]: event.target.value })
-    });
-  }
-
-  onSubmit(event) {
-    event.preventDefault();
-    const eventName = this.uniqueEventName()
-    //  concatenate the date and time in the eventTime object iso 8601 date format
-    const { date, time } = this.state.eventData;
-    const dateTime = `${date}T${time}:00`;
-    const eventData = Object.assign({}, this.state.eventData, { dateTime })
-    eventData.eventName = eventName
-    // clean up eventData object to fit {memberName, eventName, dateTime, venueName, venuePostcode, venueReason} shape
-    delete eventData.date;
-    delete eventData.time;
-    // pass eventData object to createNewEvent on database function
-    this.createNewEvent(eventData);
-  }
 
   uniqueEventName() {
     const adjectives = adjArr;
@@ -115,13 +84,6 @@ class App extends React.Component {
           urlToShare,
           createdEvent: body,
           display: 'confirmation',
-          eventData: {
-            date: "",
-            time: "19:00",
-            venueName: "",
-            venuePostcode: "",
-            eventReason: ""
-          }
         })
       })
       .catch(console.error)
@@ -175,13 +137,26 @@ class App extends React.Component {
 
           <Header />
           <Route path="/" exact render={({ match, history }) => {
-            return <OrganiserView createdEvent={this.state.createdEvent} eventData={this.state.eventData} handleChange={this.handleChange} onSubmit={this.onSubmit} urlToShare={this.state.urlToShare} display={this.state.display} />
+            return <OrganiserView createdEvent={this.state.createdEvent}
+                                  eventData={this.state.eventData}
+                                  createNewEvent={this.createNewEvent}
+                                  urlToShare={this.state.urlToShare}
+                                  uniqueEventName={this.uniqueEventName}
+                                  display={this.state.display} />
           }}
           />
 
           <Route path="/event/:eventId" render={({ match, history }) => {
             console.log(match.params.eventId)
-            return <UserView memberId={this.state.memberId} eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes} createNewSuggestion={this.createNewSuggestion} />
+            return <UserView memberId={this.state.memberId}
+                             eventId={match.params.eventId}
+                             isMember={this.state.isMember}
+                             registerUser={this.registerUser}
+                             event={this.state.event}
+                             getEvent={this.getEvent}
+                             suggestions={this.state.suggestions}
+                             votes={this.state.votes}
+                             createNewSuggestion={this.createNewSuggestion}/>
           }}
           />
           <Footer />

@@ -25,14 +25,6 @@ class App extends React.Component {
       urlToShare: "", //populated by createNewEvent when form is submitted
       isMember: false, // controlled by registerUser when name submitted
       memberId: 0,
-      eventData: {
-        memberName: "",
-        date: "",
-        time: "19:00",
-        venueName: "",
-        venuePostcode: "",
-        venueReason: ""
-      },
       event:{},
       suggestions:{},
       votes:{},
@@ -40,7 +32,6 @@ class App extends React.Component {
     }
 
     this.createNewEvent = this.createNewEvent.bind(this)
-    this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);

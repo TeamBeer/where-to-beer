@@ -22,10 +22,17 @@ class UserView extends React.Component {
     this.socket = io('http://localhost:8080');
 
     this.socket.on('RECEIVE_SUGGESTIONS', function (data) {
-      console.log(data);
-      // updateSuggestions();
+      console.log(data.suggestions);
+      updateSuggestions(data);
     });
-    // this.socket = io('http://localhost:8080');
+
+    const updateSuggestions = data => {
+
+      this.setState({
+        suggestions: data.suggestions
+      })
+
+    };
 
   }
 

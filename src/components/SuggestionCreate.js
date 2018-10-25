@@ -6,9 +6,11 @@ class SuggestionCreate extends React.Component{
 
     this.state={
       suggestionData: {
-        venue: "",
+        memberId: "",
+        eventId: "",
+        venueName: "",
         postcode: "",
-        comment: ""
+        reason: ""
       }
     }
 
@@ -27,7 +29,10 @@ class SuggestionCreate extends React.Component{
 
   handleSubmit(event){
     event.preventDefault()
-
+    const suggestionData = Object.assign({}, this.state.suggestionData)
+    suggestionData.memberId = this.props.memberId
+    suggestionData.eventId = this.props.eventId
+    this.props.createNewSuggestion(suggestionData)
   }
 
 
@@ -45,7 +50,7 @@ class SuggestionCreate extends React.Component{
 
                     <div>
                         <label className="suggestionform__venuelabel" htmlFor="venue">Pub Name</label>
-                            <input onChange={this.handleChange} className="suggestionform__venue" type="text" name="venue" id="venue" value={this.state.suggestionData.venue} placeholder="PUB NAME" required />
+                            <input onChange={this.handleChange} className="suggestionform__venue" type="text" name="venueName" id="venue" value={this.state.suggestionData.venueName} placeholder="PUB NAME" required />
                     </div>
                     <div>
                         <label  className="suggestionform__postcodelabel" htmlFor="postcode">Postcode</label>
@@ -53,7 +58,7 @@ class SuggestionCreate extends React.Component{
                     </div>
                     <div>
                         <label className="suggestionform__commentlabel" htmlFor="comment">Comment</label>
-                        <textarea onChange={this.handleChange} className="suggestionform__comment" name="comment" id="comment" value={this.state.suggestionData.comment} placeholder="Comment (optional)"></textarea>
+                        <textarea onChange={this.handleChange} className="suggestionform__comment" name="reason" id="comment" value={this.state.suggestionData.reason} placeholder="Comment (optional)"></textarea>
                     </div>
                     <div>
                         <button className="btn btn__submit" type="submit" value="">Submit</button>

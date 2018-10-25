@@ -23,7 +23,7 @@ const getEventFromDb = (eventName) => {
   return Promise.all([
     db.one('SELECT * FROM event WHERE name = $1', [eventName]),
     db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id AS "id", event.id  AS "event_id" FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),
-    db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = suggestion.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
+    db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = vote.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
   ])
     .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes }))
     .catch((error) => {console.log(error)})
@@ -90,14 +90,15 @@ app.post('/api/suggestion', (req, res) => {
     })
 })
 
-// PUT :: 
+// PUT ::
 
 // DELETE :: My Suggestion
 
 // POST :: Vote on Suggestion
 app.post('/api/vote', (req, res) => {
   const { memberId, suggestionId } = req.body
-  db.one('INSERT INTO vote (suggestion_Id, member_Id) VALUES ($1, $2) RETURNING id', [memberId, suggestionId])
+  console.log(memberId, suggestionId)
+  db.one('INSERT INTO vote (suggestion_Id, member_Id) VALUES ($1, $2) RETURNING id', [suggestionId, memberId])
     .then(voteId => res.json(voteId))
     .catch(error => {
       res.json({ error: error.message });
@@ -143,5 +144,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, function () {
   console.log(`Listening on port number ${port}`);
 });
-
-

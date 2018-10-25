@@ -7,14 +7,13 @@ import UserRegistration from './UserRegistration';
     constructor() {
     super();
     this.state={
-      event:{
-          word:"hello"
-      },
+      event:{},
       suggestions:{},
       votes:{}
     }
 
     this.getEvent = this.getEvent.bind(this)
+    this.addVote = this.addVote.bind(this)
     }
 
     componentDidMount() {
@@ -34,6 +33,23 @@ import UserRegistration from './UserRegistration';
     })
   }
 
+  addVote(suggestionId) {
+    console.log(this.props.memberId)
+    console.log(this.state.votes)
+    fetch('/api/vote', {
+      method: 'post',
+      body: JSON.stringify({suggestionId:suggestionId,memberId:this.props.memberId}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(body => {
+        this.getEvent(this.props.eventId)
+      })
+      .catch(console.error)
+  }
+
 // const UserView = ({ isMember, registerUser, memberName, event, suggestions, votes, eventId }) => {
 //   console.log(eventId)
 
@@ -45,7 +61,8 @@ import UserRegistration from './UserRegistration';
       }
       {this.props.isMember &&
         <React.Fragment>
-          <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} />
+
+          <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} />
           <SuggestionCreate memberId={this.props.memberId} eventId={this.state.event.id} eventName={this.props.eventId} getEvent={this.getEvent} createNewSuggestion={this.props.createNewSuggestion} />
         </React.Fragment>
       }

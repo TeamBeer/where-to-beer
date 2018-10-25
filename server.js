@@ -107,9 +107,9 @@ app.post('/api/vote', (req, res) => {
 
 // DELETE :: Vote on Suggestion
 
-app.delete('/api/vote/:voteId', (req, res) => {
-  const voteId = req.params.voteId;
-  db.none('DELETE FROM vote where id = $1', [voteId])
+app.delete('/api/vote', (req, res) => {
+  const { memberId, suggestionId } = req.body
+  db.none('DELETE FROM vote where member_id = $1 AND suggestion_id =$2', [memberId, suggestionId])
     .then(() => res.status(204).json({ message: 'vote deleted' }))
     .catch(error => {
       res.json({ error: error.message });

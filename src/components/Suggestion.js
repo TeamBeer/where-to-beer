@@ -1,6 +1,6 @@
 import React from "react";
 
-const Suggestion = ({suggestion, votes, addVote}) => {
+const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
   return (
     <React.Fragment>
 
@@ -8,9 +8,14 @@ const Suggestion = ({suggestion, votes, addVote}) => {
 
         <header className="suggestion_header">
           <h3 className="suggestion_title">
-            <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span> {suggestion.venue_name}
-          </h3>
+            <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span>{suggestion.venue_name}
+                  </h3>
+                  {votes.filter((vote)=>vote.memberId===memberId).length < 1 && (
           <button className="btn btn__vote" onClick={(e)=>(addVote(suggestion.id))}>+</button>
+                  )}
+                  {votes.filter((vote)=>vote.memberId===memberId).length > 0 && (
+          <button className="btn btn__vote" onClick={(e)=>(removeVote(suggestion.id))}>-</button>
+                  )}
         </header>
 
         <p className="suggestion_description">

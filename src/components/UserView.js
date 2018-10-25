@@ -15,6 +15,7 @@ import UserRegistration from './UserRegistration';
     }
   
     this.getEvent = this.getEvent.bind(this)
+    this.addVote = this.addVote.bind(this)
     }
 
     componentDidMount() {
@@ -34,6 +35,21 @@ import UserRegistration from './UserRegistration';
     })
   }
 
+  addVote(suggestionId) {
+    fetch('/api/vote', {
+      method: 'post',
+      body: JSON.stringify({suggestionId:suggestionId,memberId:this.props.memberId}),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(body => {
+        console.log(body)
+      })
+      .catch(console.error)
+  }
+
 // const UserView = ({ isMember, registerUser, memberName, event, suggestions, votes, eventId }) => {
 //   console.log(eventId)
 
@@ -45,7 +61,7 @@ import UserRegistration from './UserRegistration';
       }
       {this.props.isMember &&
         <React.Fragment>
-          <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} />
+          <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} />
           <SuggestionCreate getEvent={this.getEvent} />
         </React.Fragment>
       }

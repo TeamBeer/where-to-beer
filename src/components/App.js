@@ -164,7 +164,7 @@ class App extends React.Component {
 
           <Route path="/event/:eventId" render={({ match, history }) => {
             console.log(match.params.eventId)
-            return <UserView eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes}/>
+            return <UserView eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes} memberId={this.state.memberId} />
           }}
           />
           <Footer />

@@ -25,9 +25,6 @@ class App extends React.Component {
       urlToShare: "", //populated by createNewEvent when form is submitted
       isMember: false, // controlled by registerUser when name submitted
       memberId: 0,
-      event:{},
-      suggestions:{},
-      votes:{},
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
@@ -152,10 +149,7 @@ class App extends React.Component {
                              eventId={match.params.eventId}
                              isMember={this.state.isMember}
                              registerUser={this.registerUser}
-                             event={this.state.event}
                              getEvent={this.getEvent}
-                             suggestions={this.state.suggestions}
-                             votes={this.state.votes}
                              createNewSuggestion={this.createNewSuggestion}/>
           }}
           />

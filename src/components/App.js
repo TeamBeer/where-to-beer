@@ -33,9 +33,9 @@ class App extends React.Component {
         venuePostcode: "",
         venueReason: ""
       },
-      event:{},
-      suggestions:{},
-      votes:{},
+      event: {},
+      suggestions: {},
+      votes: {},
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
@@ -46,10 +46,10 @@ class App extends React.Component {
     this.uniqueEventName = this.uniqueEventName.bind(this);
   }
 
-  componentDidMount() {
-    if (!!localStorage.getItem('memberId')) {
+  initialFetch() {
+    if (localStorage.getItem('memberId')) {
       const { memberId } = JSON.parse(localStorage.getItem('memberId'));
-      fetch(`/api/member/${memberId}`)
+      return fetch(`/api/member/${memberId}`)
         .then(response => response.json())
         .then(body => {
           this.setState({
@@ -60,6 +60,10 @@ class App extends React.Component {
         })
         .catch(console.error)
     }
+  }
+
+  componentDidMount() {
+    this.initialFetch()
   }
 
   handleChange(event) {
@@ -164,7 +168,7 @@ class App extends React.Component {
 
           <Route path="/event/:eventId" render={({ match, history }) => {
             console.log(match.params.eventId)
-            return <UserView eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes}/>
+            return <UserView eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes} />
           }}
           />
           <Footer />

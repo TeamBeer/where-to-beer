@@ -31,8 +31,14 @@ class EventCreate extends React.Component{
 
   }
 
-  handleSubmit(){
+  handleSubmit(event){
     event.preventDefault()
+    let eventData = Object.assign({}, this.state.eventData)
+    eventData.dateTime = `${eventData.date}T${eventData.time}`
+    eventData.eventName = this.props.uniqueEventName()
+    delete eventData.date;
+    delete eventData.time;
+    this.props.createNewEvent(eventData)
   }
 
   render(){
@@ -44,7 +50,7 @@ class EventCreate extends React.Component{
                  <p>Organise at drink&hellip; all fields required unless stated</p>
                </header>
 
-               <form onSubmit={e => onSubmit(e)} className="setupform">
+               <form onSubmit={this.handleSubmit} className="setupform">
                  <div>
                    <label className="setupform__namelabel" htmlFor="name">Name</label>
                    <input className="setupform__name" onChange={this.handleChange} type="text" name="memberName" value={this.state.eventData.memberName} placeholder="NAME" pattern="[A-Za-z]{3,}" required /><span

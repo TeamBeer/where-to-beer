@@ -25,9 +25,9 @@ class App extends React.Component {
       urlToShare: "", //populated by createNewEvent when form is submitted
       isMember: false, // controlled by registerUser when name submitted
       memberId: 0,
-      event:{},
-      suggestions:{},
-      votes:{},
+      event: {},
+      suggestions: {},
+      votes: {},
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
@@ -43,8 +43,9 @@ class App extends React.Component {
 
 
   initialFetch() {
-    if (localStorage.getItem('memberId')) {
-      const { memberId } = JSON.parse(localStorage.getItem('memberId'));
+    const fromStorage = localStorage.getItem('memberId')
+    if (fromStorage) {
+      const { memberId } = JSON.parse(fromStorage);
       return fetch(`/api/member/${memberId}`)
         .then(response => response.json())
         .then(body => {
@@ -57,8 +58,6 @@ class App extends React.Component {
         .catch(console.error)
     }
   }
-
-
 
   uniqueEventName() {
     const adjectives = adjArr;
@@ -138,25 +137,25 @@ class App extends React.Component {
           <Header />
           <Route path="/" exact render={({ match, history }) => {
             return <OrganiserView createdEvent={this.state.createdEvent}
-                                  eventData={this.state.eventData}
-                                  createNewEvent={this.createNewEvent}
-                                  urlToShare={this.state.urlToShare}
-                                  uniqueEventName={this.uniqueEventName}
-                                  display={this.state.display} />
+              eventData={this.state.eventData}
+              createNewEvent={this.createNewEvent}
+              urlToShare={this.state.urlToShare}
+              uniqueEventName={this.uniqueEventName}
+              display={this.state.display} />
           }}
           />
 
           <Route path="/event/:eventId" render={({ match, history }) => {
             console.log(match.params.eventId)
             return <UserView memberId={this.state.memberId}
-                             eventId={match.params.eventId}
-                             isMember={this.state.isMember}
-                             registerUser={this.registerUser}
-                             event={this.state.event}
-                             getEvent={this.getEvent}
-                             suggestions={this.state.suggestions}
-                             votes={this.state.votes}
-                             createNewSuggestion={this.createNewSuggestion}/>
+              eventId={match.params.eventId}
+              isMember={this.state.isMember}
+              registerUser={this.registerUser}
+              event={this.state.event}
+              getEvent={this.getEvent}
+              suggestions={this.state.suggestions}
+              votes={this.state.votes}
+              createNewSuggestion={this.createNewSuggestion} />
           }}
           />
           <Footer />

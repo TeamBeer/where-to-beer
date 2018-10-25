@@ -1,0 +1,23 @@
+@import '../base/_variables.scss';
+.list__header {
+    text-align: center;
+
+}
+.list__title {
+    font-size: 1.5rem;
+    color: $accent-color;
+    span {
+        color: lighten($accent-color, 30% );
+    &:first-child {
+        display: block;
+    }    
+    }
+}
+.suggestionlist__view {
+    margin: $main-padding*3 0;
+}
+.suggestionlist__header {
+    text-align: center;
+    margin-bottom: $main-padding*3
+}
+

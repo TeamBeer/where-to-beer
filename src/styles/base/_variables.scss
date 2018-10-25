@@ -1,9 +1,16 @@
 // Variables
 
 // Color
-$text-color: black;
-$background-color: Cornsilk;;
-$primary-color: red;
+$dark-color: #343237;
+$light-color:#FDFDFD;;
+$primary-color: #FACD12;
+$mild-color: #D9D7D0;
+$mid-color: #595F6E;
+$accent-color: #0069B6;
+
+// Typography
+$body-font: 'Noto Sans', sans-serif;
+$headline-font: 'Fjalla One', sans-serif;
 
 // Padding
 $main-padding: 1rem;

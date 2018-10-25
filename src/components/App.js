@@ -35,12 +35,17 @@ class App extends React.Component {
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
     this.createNewSuggestion = this.createNewSuggestion.bind(this);
+  }
 
-}
   componentDidMount() {
-    if (!!localStorage.getItem('memberId')) {
+    this.initialFetch()
+  }
+
+
+  initialFetch() {
+    if (localStorage.getItem('memberId')) {
       const { memberId } = JSON.parse(localStorage.getItem('memberId'));
-      fetch(`/api/member/${memberId}`)
+      return fetch(`/api/member/${memberId}`)
         .then(response => response.json())
         .then(body => {
           this.setState({
@@ -52,8 +57,6 @@ class App extends React.Component {
         .catch(console.error)
     }
   }
-
-
 
 
 
@@ -112,7 +115,7 @@ class App extends React.Component {
   }
 
 
-  createNewSuggestion(newSuggestion){
+  createNewSuggestion(newSuggestion) {
     console.log('fetch')
     fetch('/api/suggestion', {
       method: 'post',
@@ -121,8 +124,8 @@ class App extends React.Component {
         'Content-Type': 'application/json'
       }
     })
-    .then(response => response.json())
-    .catch(console.error)
+      .then(response => response.json())
+      .catch(console.error)
   }
 
   render() {

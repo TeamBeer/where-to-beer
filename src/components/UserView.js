@@ -7,9 +7,7 @@ import UserRegistration from './UserRegistration';
     constructor() {
     super();
     this.state={
-      event:{
-          word:"hello"
-      },
+      event:{},
       suggestions:{},
       votes:{}
     }
@@ -36,6 +34,8 @@ import UserRegistration from './UserRegistration';
   }
 
   addVote(suggestionId) {
+    console.log(this.props.memberId)
+    console.log(this.state.votes)
     fetch('/api/vote', {
       method: 'post',
       body: JSON.stringify({suggestionId:suggestionId,memberId:this.props.memberId}),
@@ -45,7 +45,7 @@ import UserRegistration from './UserRegistration';
     })
       .then(response => response.json())
       .then(body => {
-        console.log(body)
+        this.getEvent(this.props.eventId)
       })
       .catch(console.error)
   }

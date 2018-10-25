@@ -27,7 +27,7 @@ const formatDate = require('date-fns/format')
                     </header>
                     {Object.values(this.props.suggestions).map(suggestion => {
                         const votes = this.props.votes.filter(vote => vote.suggestionId === suggestion.id)
-                        return  <Suggestion suggestion={suggestion} votes={votes} key={suggestion.id}/>
+                        return  <Suggestion addVote={this.props.addVote} suggestion={suggestion} votes={votes} key={suggestion.id}/>
                     })}
                 </section>
             

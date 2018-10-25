@@ -15,10 +15,14 @@ describe('App', () => {
 
   test('handleChange should set eventData in state', () => {
     const mockEvent = {
-      target: { value: "Joe" }
+      target: {
+        name: "memberName",
+        value: "Joe"
+      }
     }
     instance.handleChange(mockEvent);
-    expect(instance.state.eventData.name).toBe("Joe");
+    console.log(instance.state.eventData);
+    expect(instance.state.eventData.memberName).toBe("Joe");
   });
 
 

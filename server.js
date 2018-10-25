@@ -152,8 +152,8 @@ app.use((req, res) => {
 io.on('connection', socket => {
   console.log('User connected');
   console.log(socket.id);
-  socket.on('SEND_MESSAGE', function (data) {
-    io.emit('RECEIVE_MESSAGE', data);
+  socket.on('SEND_SUGGESTIONS', function (data) {
+    io.emit('RECEIVE_SUGGESTIONS', data);
   })
 
   socket.on('disconnect', () => {

@@ -1,0 +1,83 @@
+@import '../base/_variables.scss';
+
+input, textarea {
+    background-color: $primary-color;
+    display: inline-block;
+    transition: 300ms ease;
+    border-radius: 7px;
+    border: 0;
+    margin: 0.3rem 0;
+    padding: $main-padding * 0.5;
+    overflow: hidden;
+    outline: 0;
+	max-width: 350px;
+	width: calc(100% - 2em);
+}
+textarea {
+    background-color: lighten($primary-color, 30% );
+    height: 100px;
+}
+
+input:invalid + span:after {
+    content: '✖';
+    color: #f00;
+    padding-left: 5px;
+}
+
+input:valid + span:after {
+    content: '✓';
+    color: #26b72b;
+    padding-left: 5px;
+}
+
+label {
+    font-family: $headline-font;
+    font-size: .85rem;
+	display: inline-block;
+    padding: 0 1em;
+    width: 100%;
+	color: lighten($primary-color, 30% );
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-datetime-edit-text { color:$mid-color; }
+::-webkit-inner-spin-button { display: none; }
+::-webkit-calendar-picker-indicator { background: $light-color; }
+
+.btn {
+    font-family: $headline-font;
+    color:  $light-color;
+    background-color: $accent-color;
+    padding: $main-padding *0.8 ;
+    display: inline-block;
+    border-radius: 7px;
+    border: 0;
+    margin: 0.3rem 0;
+
+    text-decoration: none;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 250ms ease-in-out, 
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    &::after {
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f0a9";
+        margin-left: 5px;
+    }
+    &:hover {
+        text-decoration: none;
+        background-color:  darken(green, 10% );
+    }
+    
+  
+  }
+

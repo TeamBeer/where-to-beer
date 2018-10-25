@@ -22,7 +22,7 @@ app.set('view engine', 'hbs');
 const getEventFromDb = (eventName) => {
   return Promise.all([
     db.one('SELECT * FROM event WHERE name = $1', [eventName]),
-    db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id, event.id FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),
+    db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id AS "id", event.id  AS "event_id" FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),
     db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = suggestion.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
   ])
     .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes }))

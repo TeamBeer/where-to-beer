@@ -149,6 +149,19 @@ class App extends React.Component {
       .catch(console.error)
   }
 
+
+  createNewSuggestion(newSuggestion){
+    const currentUser = this.state.memberName
+    fetch('/api/suggestion', {
+      method: 'post',
+      body: JSON.stringify(newSuggestion),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+  }
+
   render() {
 
     return (

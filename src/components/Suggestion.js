@@ -23,7 +23,7 @@ const Suggestion = ({suggestion, votes}) => {
                   </div>
           <ul className="suggestion_voters">
           {votes.map(vote => {
-            return <li className="suggestion_voter">{vote.memberName}</li>
+            return <li className="suggestion_voter" key={vote.voteId}>{vote.memberName}</li>
           })}
           </ul>
         </footer>

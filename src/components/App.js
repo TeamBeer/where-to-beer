@@ -152,7 +152,7 @@ class App extends React.Component {
 
 
   createNewSuggestion(newSuggestion){
-    const currentUser = this.state.memberName
+    console.log('fetch')
     fetch('/api/suggestion', {
       method: 'post',
       body: JSON.stringify(newSuggestion),
@@ -161,7 +161,7 @@ class App extends React.Component {
       }
     })
     .then(response => response.json())
-    .then()
+    .catch(console.error)
   }
 
   render() {

@@ -16,6 +16,19 @@ class SuggestionCreate extends React.Component{
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.resetState = this.resetState.bind(this)
+  }
+
+  resetState(){
+    this.setState({
+      suggestionData: {
+        memberId: "",
+        eventId: "",
+        venueName: "",
+        postcode: "",
+        reason: ""
+      }
+    })
   }
 
   handleChange(event){
@@ -33,6 +46,8 @@ class SuggestionCreate extends React.Component{
     suggestionData.memberId = this.props.memberId
     suggestionData.eventId = this.props.eventId
     this.props.createNewSuggestion(suggestionData)
+    this.resetState()
+    this.props.getEvent(this.props.eventName)
   }
 
 

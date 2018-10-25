@@ -1,0 +1,9 @@
+@import '../base/_variables.scss';
+
+.app__footer {
+    margin: $main-padding 0;
+    padding: $main-padding*2 $main-padding 0;
+    text-align: center;
+    color: lighten($mid-color, 10% );
+
+   }

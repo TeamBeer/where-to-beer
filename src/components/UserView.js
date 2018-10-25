@@ -13,7 +13,7 @@ import UserRegistration from './UserRegistration';
       suggestions:{},
       votes:{}
     }
-  
+
     this.getEvent = this.getEvent.bind(this)
     }
 
@@ -21,7 +21,7 @@ import UserRegistration from './UserRegistration';
       this.getEvent(this.props.eventId)
     }
 
-    
+
     getEvent(eventId) {
     fetch(`/api/event/${eventId}`)
     .then(response => response.json())
@@ -46,7 +46,7 @@ import UserRegistration from './UserRegistration';
       {this.props.isMember &&
         <React.Fragment>
           <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} />
-          <SuggestionCreate getEvent={this.getEvent} />
+          <SuggestionCreate memberId={this.props.memberId} eventId={this.state.event.id} eventName={this.props.eventId} getEvent={this.getEvent} createNewSuggestion={this.props.createNewSuggestion} />
         </React.Fragment>
       }
     </React.Fragment>

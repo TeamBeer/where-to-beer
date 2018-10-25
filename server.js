@@ -90,7 +90,7 @@ app.post('/api/suggestion', (req, res) => {
     })
 })
 
-// PUT :: 
+// PUT ::
 
 // DELETE :: My Suggestion
 
@@ -143,5 +143,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, function () {
   console.log(`Listening on port number ${port}`);
 });
-
-

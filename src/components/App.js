@@ -44,8 +44,9 @@ class App extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
-  }
+    this.createNewSuggestion = this.createNewSuggestion.bind(this);
 
+}
   componentDidMount() {
     if (!!localStorage.getItem('memberId')) {
       const { memberId } = JSON.parse(localStorage.getItem('memberId'));
@@ -149,6 +150,20 @@ class App extends React.Component {
       .catch(console.error)
   }
 
+
+  createNewSuggestion(newSuggestion){
+    console.log('fetch')
+    fetch('/api/suggestion', {
+      method: 'post',
+      body: JSON.stringify(newSuggestion),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => response.json())
+    .catch(console.error)
+  }
+
   render() {
 
     return (
@@ -164,7 +179,7 @@ class App extends React.Component {
 
           <Route path="/event/:eventId" render={({ match, history }) => {
             console.log(match.params.eventId)
-            return <UserView eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes}/>
+            return <UserView memberId={this.state.memberId} eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes} createNewSuggestion={this.createNewSuggestion}/>
           }}
           />
           <Footer />

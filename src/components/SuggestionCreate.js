@@ -65,15 +65,21 @@ class SuggestionCreate extends React.Component{
 
                     <div>
                         <label className="suggestionform__venuelabel" htmlFor="venue">Pub Name</label>
-                            <input onChange={this.handleChange} className="suggestionform__venue" type="text" name="venueName" id="venue" value={this.state.suggestionData.venueName} placeholder="PUB NAME" required />
+                            <input onChange={this.handleChange} className="suggestionform__venue" type="text" name="venueName" id="venue" value={this.state.suggestionData.venueName} pattern="[A-Za-z0-9\s]{1,}" required /><span
+                     className="validity"></span>
                     </div>
                     <div>
                         <label  className="suggestionform__postcodelabel" htmlFor="postcode">Postcode</label>
-                        <input onChange={this.handleChange} className="suggestionform__postcode" type="text" name="postcode" id="postcode" value={this.state.suggestionData.postcode} placeholder="POSTCODE" required />
+                        <input onChange={this.handleChange} className="suggestionform__postcode" type="text" name="postcode" id="postcode" value={this.state.suggestionData.postcode} pattern="^([Gg][Ii][Rr]
+         0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([AZa-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})$" required /><span
+             className="validity"></span>
+
+
+
                     </div>
                     <div>
                         <label className="suggestionform__commentlabel" htmlFor="comment">Comment</label>
-                        <textarea onChange={this.handleChange} className="suggestionform__comment" name="reason" id="comment" value={this.state.suggestionData.reason} placeholder="Comment (optional)"></textarea>
+                        <textarea onChange={this.handleChange} className="suggestionform__comment" name="reason" id="comment" value={this.state.suggestionData.reason}></textarea>
                     </div>
                     <div>
                         <button className="btn btn__submit" type="submit" value="">Submit</button>
@@ -91,41 +97,5 @@ class SuggestionCreate extends React.Component{
 
 }
 
-
-// function SuggestionCreate(){
-//
-      // return (
-      //   <React.Fragment>
-      //       <section className="suggestionCreate">
-      //
-      //           <h3>Make a suggestion</h3>
-      //
-      //           <form className="suggestionform">
-      //               {/* <div>
-      //                   <label className="suggestionform__namelabel" htmlFor="name">Name</label>
-      //                   <input className="suggestionform__name" type="text" name="name" id="name" value="" placeholder="NAME" required />
-      //               </div>  */}
-      //               <div>
-      //                   <label className="suggestionform__venuelabel" htmlFor="venue">Pub Name</label>
-      //                       <input className="suggestionform__venue" type="text" name="venue" id="venue" value="" placeholder="PUB NAME" required />
-      //               </div>
-      //               <div>
-      //                   <label className="suggestionform__postcodelabel" htmlFor="postcode">Postcode</label>
-      //                   <input className="suggestionform__postcode" type="text" name="postcode" id="postcode" value="" placeholder="POSTCODE" required />
-      //               </div>
-      //               <div>
-      //                   <label className="suggestionform__commentlabel" htmlFor="comment">Comment</label>
-      //                   <textarea className="suggestionform__comment" name="comment" id="comment" placeholder="Comment (optional)"></textarea>
-      //               </div>
-      //               <div>
-      //                   <button className="btn btn__submit" type="submit" value="">Submit</button>
-      //               </div>
-      //           </form>
-      //
-      //       </section>
-      //
-      //   </React.Fragment>
-//       )
-//     }
 
 export default SuggestionCreate;

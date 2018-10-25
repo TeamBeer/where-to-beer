@@ -6,17 +6,17 @@ global.fetch = require('jest-fetch-mock');
 global.localStorage = require('jest-localstorage-mock');
 
 describe('App', () => {
+  let wrapper;
+  let instance;
+
+  beforeEach(() => {
+    wrapper = shallow(<App />);
+    instance = wrapper.instance();
+    fetch.resetMocks();
+    localStorage.clear();
+  });
 
   describe('On first load', () => {
-    let wrapper;
-    let instance;
-
-    beforeEach(() => {
-      wrapper = shallow(<App />);
-      instance = wrapper.instance();
-      fetch.resetMocks();
-      localStorage.clear();
-    });
 
     test('Initial state eventData should only contain a default time', () => {
       expect(instance.state.eventData).toEqual({
@@ -37,8 +37,9 @@ describe('App', () => {
         expect(instance.state).toMatchObject({ isMember: true, memberId: 23, memberName: "Joe" });
       })
     })
+  })
 
-
+  describe('User interaction', () => {
     test('handleChange should set eventData in state', () => {
       const mockEvent = {
         target: {
@@ -50,5 +51,7 @@ describe('App', () => {
       console.log(instance.state.eventData);
       expect(instance.state.eventData.memberName).toBe("Joe");
     });
+
   })
+
 })

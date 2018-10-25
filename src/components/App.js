@@ -66,6 +66,7 @@ class App extends React.Component {
     this.initialFetch()
   }
 
+
   handleChange(event) {
     this.setState({
       eventData: Object.assign(

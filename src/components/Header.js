@@ -1,4 +1,5 @@
 import React from "react";
+import '../styles/components/Header.scss';
 
 function Header(){
 
@@ -6,7 +7,7 @@ function Header(){
         <React.Fragment>
             
             <header className="app__header">
-              <h1 className="app__title">Beer?</h1>
+              <h1 className="app__title">Where to Beer?</h1>
             </header>
 
         </React.Fragment>

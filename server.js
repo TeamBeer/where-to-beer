@@ -20,6 +20,7 @@ app.set('view engine', 'hbs');
 
 // This function is shared by both the Post and Get routes for event
 const getEventFromDb = (eventName) => {
+  
   return Promise.all([
     db.one('SELECT * FROM event WHERE name = $1', [eventName]),
     db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id AS "id", event.id  AS "event_id" FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),
@@ -107,9 +108,9 @@ app.post('/api/vote', (req, res) => {
 
 // DELETE :: Vote on Suggestion
 
-app.delete('/api/vote/:voteId', (req, res) => {
-  const voteId = req.params.voteId;
-  db.none('DELETE FROM vote where id = $1', [voteId])
+app.delete('/api/vote', (req, res) => {
+  const { memberId, suggestionId } = req.body
+  db.none('DELETE FROM vote where member_id = $1 AND suggestion_id =$2', [memberId, suggestionId])
     .then(() => res.status(204).json({ message: 'vote deleted' }))
     .catch(error => {
       res.json({ error: error.message });

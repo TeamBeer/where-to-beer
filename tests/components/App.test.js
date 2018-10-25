@@ -52,6 +52,16 @@ describe('App', () => {
       expect(instance.state.eventData.memberName).toBe("Joe");
     });
 
+    // TODO: onSubmit
+
+    // TODO: uniqueEventName
+
+    // TODO: createNewEvent
+
+    // TODO: registerUser
+
+
+
   })
 
 })

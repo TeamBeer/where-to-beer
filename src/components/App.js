@@ -91,8 +91,6 @@ class App extends React.Component {
     this.createNewEvent(eventData);
   }
 
-
-
   uniqueEventName() {
     const adjectives = adjArr;
     const nouns = nounArr;

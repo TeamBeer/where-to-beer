@@ -22,7 +22,6 @@ class UserView extends React.Component {
     this.socket = io('http://localhost:8080');
 
     this.socket.on('RECEIVE_SUGGESTIONS', function (data) {
-      console.log(data.suggestions);
       updateSuggestions(data);
     });
 
@@ -38,7 +37,6 @@ class UserView extends React.Component {
 
   componentDidMount() {
     this.getEvent(this.props.eventId);
-    console.log('fired did mount');
   }
 
 

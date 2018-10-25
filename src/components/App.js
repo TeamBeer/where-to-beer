@@ -29,11 +29,6 @@ class App extends React.Component {
     this.uniqueEventName = this.uniqueEventName.bind(this);
     this.createNewSuggestion = this.createNewSuggestion.bind(this);
 
-    // this.socket = io('http://localhost:8080');
-
-    // this.socket.on('RECEIVE_SUGGESTIONS', function (data) {
-    //   console.log(data);
-    // });
 
 
   }
@@ -115,7 +110,6 @@ class App extends React.Component {
 
 
   createNewSuggestion(newSuggestion) {
-    console.log('fetch')
     fetch('/api/suggestion', {
       method: 'post',
       body: JSON.stringify(newSuggestion),

@@ -8,8 +8,8 @@ const Suggestion = ({suggestion, votes, addVote}) => {
 
         <header className="suggestion_header">
           <h3 className="suggestion_title">
-            <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span>{suggestion.venue_name}
-                  </h3>
+            <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span> {suggestion.venue_name}
+          </h3>
           <button className="btn btn__vote" onClick={(e)=>(addVote(suggestion.id))}>+</button>
         </header>
 

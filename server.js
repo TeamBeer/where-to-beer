@@ -20,6 +20,7 @@ app.set('view engine', 'hbs');
 
 // This function is shared by both the Post and Get routes for event
 const getEventFromDb = (eventName) => {
+  
   return Promise.all([
     db.one('SELECT * FROM event WHERE name = $1', [eventName]),
     db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id AS "id", event.id  AS "event_id" FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),

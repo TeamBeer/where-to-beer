@@ -1,5 +1,4 @@
 import React from 'react';
-import '../styles/base/forms.scss';
 import '../styles/components/EventCreate.scss';
 
 const EventCreate = ({handleChange, onSubmit, eventData}) => {

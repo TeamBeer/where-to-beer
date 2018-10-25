@@ -1,6 +1,6 @@
 import React from "react";
 
-const Suggestion = ({suggestion, votes}) => {
+const Suggestion = ({suggestion, votes, addVote}) => {
   return (
     <React.Fragment>
 
@@ -10,7 +10,7 @@ const Suggestion = ({suggestion, votes}) => {
           <h3 className="suggestion_title">
             <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span>{suggestion.venue_name}
                   </h3>
-          <button className="btn btn__vote">+</button>
+          <button className="btn btn__vote" onClick={(e)=>(addVote(suggestion.id))}>+</button>
         </header>
 
         <p className="suggestion_description">
@@ -23,7 +23,7 @@ const Suggestion = ({suggestion, votes}) => {
                   </div>
           <ul className="suggestion_voters">
           {votes.map(vote => {
-            return <li className="suggestion_voter">{vote.memberName}</li>
+            return <li className="suggestion_voter" key={vote.voteId}>{vote.memberName}</li>
           })}
           </ul>
         </footer>

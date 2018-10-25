@@ -33,9 +33,9 @@ class App extends React.Component {
         venuePostcode: "",
         venueReason: ""
       },
-      event:{},
-      suggestions:{},
-      votes:{},
+      event: {},
+      suggestions: {},
+      votes: {},
       display: "creation" //'creation' or 'confirmation' or 'userView'
     }
 
@@ -44,12 +44,12 @@ class App extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
+    this.createNewSuggestion = this.createNewSuggestion.bind(this);
   }
-
-  componentDidMount() {
-    if (!!localStorage.getItem('memberId')) {
+  initialFetch() {
+    if (localStorage.getItem('memberId')) {
       const { memberId } = JSON.parse(localStorage.getItem('memberId'));
-      fetch(`/api/member/${memberId}`)
+      return fetch(`/api/member/${memberId}`)
         .then(response => response.json())
         .then(body => {
           this.setState({
@@ -61,6 +61,11 @@ class App extends React.Component {
         .catch(console.error)
     }
   }
+
+  componentDidMount() {
+    this.initialFetch()
+  }
+
 
   handleChange(event) {
     this.setState({
@@ -85,8 +90,6 @@ class App extends React.Component {
     // pass eventData object to createNewEvent on database function
     this.createNewEvent(eventData);
   }
-
-
 
   uniqueEventName() {
     const adjectives = adjArr;
@@ -149,6 +152,20 @@ class App extends React.Component {
       .catch(console.error)
   }
 
+
+  createNewSuggestion(newSuggestion) {
+    console.log('fetch')
+    fetch('/api/suggestion', {
+      method: 'post',
+      body: JSON.stringify(newSuggestion),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .catch(console.error)
+  }
+
   render() {
 
     return (
@@ -164,7 +181,7 @@ class App extends React.Component {
 
           <Route path="/event/:eventId" render={({ match, history }) => {
             console.log(match.params.eventId)
-            return <UserView eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes}/>
+            return <UserView memberId={this.state.memberId} eventId={match.params.eventId} isMember={this.state.isMember} registerUser={this.registerUser} event={this.state.event} getEvent={this.getEvent} suggestions={this.state.suggestions} votes={this.state.votes} createNewSuggestion={this.createNewSuggestion} />
           }}
           />
           <Footer />

@@ -33,7 +33,7 @@ const formatDate = require('date-fns/format')
             
                 <section className="suggestionlist__view">
                     <header className="suggestionlist__header"> 
-                        <h2  className="suggestionlist__title">Suggestions</h2>
+                        <h2  className="suggestionlist__title">Vote on it!</h2>
                         {/* <button className="btn btn__refresh">Refresh</button> */}
                     </header>
                     {Object.values(this.props.suggestions).map(suggestion => {

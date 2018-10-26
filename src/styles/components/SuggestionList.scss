@@ -2,6 +2,9 @@
 .suggestionList {
     text-align: center;
 }
+.suggestionlist__title {
+    margin: 0;
+}
 .list__title {
     font-size: 1.5rem;
     color: $accent-color;
@@ -12,8 +15,7 @@
         }    
     }
 }
-.list__all {
-}
+
 .list__organiser, .list__memberstitle {
     color: lighten($primary-color, 30% );
     margin: 0;
@@ -30,6 +32,6 @@ font-family: $headline-font;
 }
 .suggestionlist__header {
     text-align: center;
-    margin-bottom: $main-padding*3
+    margin-bottom: $main-padding
 }
 

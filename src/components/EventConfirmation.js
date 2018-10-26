@@ -22,15 +22,18 @@ function EventConfirmation({urlToShare, createdEvent}){
               </header>
 
               <section className="confirm__suggestion">
-                <h3>Your suggestion</h3>
-                <h4 className="suggestion__subtitle">{createdEvent.suggestions[0].venue_name}</h4><span><h4>{createdEvent.suggestions[0].postcode}</h4></span>
-                  <p className="suggestion_description">
-                    {createdEvent.suggestions[0].reason}
-                  </p>
-                  
-                  <a className="confirm__sharelink" href={urlLink} target="_blank" title="Share this link">{urlToShare}</a>
+                
+                <h3 className="suggestion__venue"><span>Your suggestion</span>{createdEvent.suggestions[0].venue_name}</h3>
 
-                  <button className="confirm__edit btn btn">Edit your suggestion</button>
+                <h4 className="suggestion__postcode">{createdEvent.suggestions[0].postcode}</h4>
+
+                <p className="suggestion_description">
+                  {createdEvent.suggestions[0].reason}
+                </p>
+                  
+                  <a className="suggestion__sharelink" href={urlLink} target="_blank" title="Share this link">{urlToShare}</a>
+
+                  {/* <button className="confirm__edit btn btn">Edit your suggestion</button> */}
               </section>
 
           </section>

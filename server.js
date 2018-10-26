@@ -103,7 +103,6 @@ app.post('/api/suggestion', (req, res) => {
 // POST :: Vote on Suggestion
 app.post('/api/vote', (req, res) => {
   const { memberId, suggestionId } = req.body
-  console.log(memberId, suggestionId)
   db.one('INSERT INTO vote (suggestion_Id, member_Id) VALUES ($1, $2) RETURNING id', [suggestionId, memberId])
     .then(voteId => res.json(voteId))
     .catch(error => {
@@ -142,44 +141,18 @@ app.get('/api/member/:memberId', (req, res) => {
     })
 })
 
-
-
 app.use((req, res) => {
   res.render('index');
 });
 
-
-
 io.sockets.on('connection', socket => {
-  console.log('User connected');
-  console.log(socket.id);
+  console.log('user connected')
   socket.on('JOIN', function (channel) {
-    console.log(channel);
-    // socket.get('channel', function (err, oldChannel) {
-    //   if (err) {
-    //     socket.emit('error', err);
-    //   }
-    //   else if (oldChannel) {
-    //     socket.leave(oldChannel);
-    //   }
-    // socket.set('channel', channel, function () {
     socket.join(channel);
-
-    // });
-    // });
   });
 
   socket.on('SEND_SUGGESTIONS', function (channel, data) {
-    // io.emit('RECEIVE_SUGGESTIONS', data);
-    // socket.get('channel', function (err, channel) {
-    // if (err) {
-    //   socket.emit('error', err);
-    // } else if (channel) {
     socket.broadcast.to(channel).emit('RECEIVE_SUGGESTIONS', data);
-    // } else {
-    //   socket.emit('error', 'no channel');
-    // }
-    // });
   })
 
   socket.on('disconnect', () => {

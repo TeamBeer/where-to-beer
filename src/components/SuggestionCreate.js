@@ -65,7 +65,7 @@ class SuggestionCreate extends React.Component{
 
                     <div>
                         <label className="suggestionform__venuelabel" htmlFor="venue">Pub Name</label>
-              <input onChange={this.handleChange} className="suggestionform__venue" type="text" name="venueName" id="venue" value={this.state.suggestionData.venueName} pattern="[A-Za-z0-9\s\&\']{1,}" required /><span
+              <input onChange={this.handleChange} className="suggestionform__venue" type="text" name="venueName" id="venue" value={this.state.suggestionData.venueName} pattern="[A-Za-z0-9\s]{1,}" required /><span
                      className="validity"></span>
                     </div>
                     <div>

@@ -67,7 +67,7 @@ class EventCreate extends React.Component{
                  </div>
                  <div>
                    <label className="setupform__venuelabel" htmlFor="venue_name">Pub Name</label>
-                   <input className="setupform__venue" onChange={this.handleChange} type="text" name="venueName" value={this.state.eventData.venueName} pattern="[A-Za-z0-9\s]{1,}" required /><span className="validity"></span>
+                   <input className="setupform__venue" onChange={this.handleChange} type="text" name="venueName" value={this.state.eventData.venueName} pattern="[A-Za-z0-9\s\&\']{1,}" required /><span className="validity"></span>
                  </div>
                  <div>
                    <label className="setupform__postcodelabel" htmlFor="postcode">Postcode</label>

@@ -1,0 +1,13 @@
+@import '../base/_variables.scss';
+
+.p404{
+  text-align: center;
+
+  &__image{
+    background: url("/static/images/404image2.jpg");
+    height: 161px;
+    width: 300px;
+    background-size: cover;
+    background-position: center;
+  }
+}

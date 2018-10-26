@@ -20,7 +20,7 @@ class UserRegistration extends React.Component {
       <form onSubmit={e => this.props.registerUser(e, this.state.memberName, this.props.event.id)}>
         <label htmlFor="userName">Your name (no spaces)</label>
         <input onChange={e => this.handleChange(e)} type="text" name="userName" id="userName" value={this.state.memberName} pattern="[A-Za-z]{3,}" />
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn btn__submit">Submit</button>
       </form>
     )
   }

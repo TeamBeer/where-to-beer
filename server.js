@@ -32,7 +32,6 @@ const getEventFromDb = (eventName) => {
     db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = vote.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
   ])
     .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes }))
-    .catch((error) => { console.log(error) })
 }
 
 
@@ -144,7 +143,7 @@ app.get('/api/member/:memberId', (req, res) => {
     })
 })
 
-// GET :: Member event 
+// GET :: Member event
 app.get('/api/event/:id/members', (req, res) => {
   const eventId = req.params.id
   db.any('SELECT member_event.id, member.name FROM member_event, member WHERE event_id = $1 AND member.id = member_event.member_id Order By member_event.id', [eventId])

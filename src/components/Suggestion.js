@@ -1,4 +1,5 @@
 import React from "react";
+import "../styles/components/Suggestion.scss"
 
 const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
   return (
@@ -6,9 +7,9 @@ const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
 
       <article className="suggestion__card suggestion--winner">
 
-        <header className="suggestion_header">
-          <h3 className="suggestion_title">
-            <span className="suggestion_kicker">{suggestion.name} suggests&hellip;</span>{suggestion.venue_name}
+        <header className="suggestion__header">
+          <h3 className="suggestion__title">
+            <span className="suggestion__kicker">{suggestion.name} suggests&hellip;</span>
                   </h3>
                   {votes.filter((vote)=>vote.memberId===memberId).length < 1 && (
           <button className="btn btn__vote" onClick={(e)=>(addVote(suggestion.id))}>+</button>
@@ -16,19 +17,27 @@ const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
                   {votes.filter((vote)=>vote.memberId===memberId).length > 0 && (
           <button className="btn btn__vote" onClick={(e)=>(removeVote(suggestion.id))}>-</button>
                   )}
-        </header>
+          </header>
 
-        <p className="suggestion_description">
-          {suggestion.reason}
-              </p>
+          <div className="suggestion__info">
+            <div className="suggestion__pub-details">
+            <h2 className="suggestion__pub-name"><span>{suggestion.venue_name}</span></h2>
+            <h3 className="suggestion__pub-postcode"><span>{suggestion.postcode}</span></h3>
+          </div>
+            <p className="suggestion__description">
+    {suggestion.reason}
+        </p>
+          </div>
 
-        <footer className="suggestion_footer">
-          <div className="suggestion_votes">
-            <span className="suggestion_count">{votes.length}</span> Votes
+
+
+        <footer className="suggestion__footer">
+          <div className="suggestion__votes">
+
                   </div>
-          <ul className="suggestion_voters">
+          <ul className="suggestion__voters">
           {votes.map(vote => {
-            return <li className="suggestion_voter" key={vote.voteId}>{vote.memberName}</li>
+            return <li className="suggestion__voter" key={vote.voteId}>{vote.memberName.charAt(0).toUpperCase()}</li>
           })}
           </ul>
         </footer>

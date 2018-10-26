@@ -1,5 +1,9 @@
 @import '../base/_variables.scss';
+@import '../base/_button.scss';
 
+form {
+    margin: 0 auto;
+    }
 input, textarea {
     background-color: $primary-color;
     display: inline-block;
@@ -7,78 +11,70 @@ input, textarea {
     border-radius: 7px;
     border: 0;
     margin: 0.3rem 0;
-    padding: $main-padding * 0.5;
+    padding: $main-padding * 0.7;
     overflow: hidden;
     outline: 0;
-	max-width: 350px;
-	width: calc(100% - 2em);
+	width: calc(100% - 2.5rem);
+}
+input[type=date], input[type=time] {
+    padding: $main-padding * 0.5;
 }
 textarea {
     background-color: lighten($primary-color, 30% );
     height: 100px;
 }
 
-input:invalid + span:after {
-    content: '✖';
-    color: #f00;
-    padding-left: 5px;
+form div {
+    position: relative;
+    .validity {
+        position: absolute;
+        top: 50%;
+        right: -3px;
+    }
 }
 
-input:valid + span:after {
+input:invalid + span.validity:after {
+    content: '✖';
+    color: #f00;
+}
+
+input:valid + span.validity:after {
     content: '✓';
     color: #26b72b;
-    padding-left: 5px;
 }
 
 label {
+    text-align: left;
     font-family: $headline-font;
     font-size: .85rem;
 	display: inline-block;
-    padding: 0 1em;
+    padding: 0 1.5rem;
     width: 100%;
 	color: lighten($primary-color, 30% );
 	-webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-::-webkit-datetime-edit-text { color:$mid-color; }
-::-webkit-inner-spin-button { display: none; }
-::-webkit-calendar-picker-indicator { background: $light-color; }
-
-.btn {
-    font-family: $headline-font;
-    color:  $light-color;
-    background-color: $accent-color;
-    padding: $main-padding *0.8 ;
-    display: inline-block;
-    border-radius: 7px;
-    border: 0;
-    margin: 0.3rem 0;
-
-    text-decoration: none;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 250ms ease-in-out, 
-                transform 150ms ease;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    &.btn__submit::after {
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        -webkit-font-smoothing: antialiased;
-        font-family: "Font Awesome 5 Free";
-        font-weight: 900;
-        content: "\f0a9";
-        margin-left: 5px;
+// MEDIA QUERIES
+@media (min-width: 768px) {
+    form {
+        max-width: 80%;
     }
-    &:hover {
-        text-decoration: none;
-        background-color:  darken(green, 10% );
-    }
+}
+
+@media (min-width: 960px) {
     
+}
+
+@media (min-width: 1200px) {
+    form {
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 1440px) {
+}    
     
   
-  }
+  
 

@@ -1,0 +1,57 @@
+@import '../base/_variables.scss';
+@import '../base/_button.scss';
+
+.organiserConfirm {
+    text-align: center;
+}
+.confirm__suggestion {
+    margin: 0 auto;
+}
+
+.confirm__header {
+    text-align: center;
+}
+.confirm__title {
+    font-size: 1.5rem;
+    color: $accent-color;
+    span {
+        color: lighten($accent-color, 30% );
+    &:first-child {
+        display: block;
+    }    
+    }
+}
+.confirm__sharelink {
+    display: block;
+    padding: $main-padding;
+    margin-bottom: $main-padding;
+    border: 2px dashed $light-color;
+    color: $primary-color;
+    
+    &:hover {
+        border: 2px dashed lighten($primary-color, 30% );
+        color: lighten($primary-color, 30% );
+    }
+
+}
+
+
+// MEDIA QUERIES
+@media (min-width: 768px) {
+    .confirm__suggestion {
+        max-width: 80%;
+    }
+}
+
+@media (min-width: 960px) {
+    
+}
+
+@media (min-width: 1200px) {
+    .confirm__suggestion {
+        max-width: 50%;
+    }
+}
+
+@media (min-width: 1440px) {
+}  

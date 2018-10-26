@@ -19,7 +19,7 @@ class UserView extends React.Component {
     this.broadcastSuggestions = this.broadcastSuggestions.bind(this);
     // this.updateSuggestions = this.updateSuggestions.bind(this);
 
-    this.socket = io('http://localhost:8080');
+    this.socket = io(process.env.HOST_DOMAIN || 'http://localhost:8080');
 
     this.socket.on('RECEIVE_SUGGESTIONS', function (data) {
       updateSuggestions(data);
@@ -35,6 +35,10 @@ class UserView extends React.Component {
 
   componentDidMount() {
     this.getEvent(this.props.eventId);
+    const eventName = this.props.eventId;
+    this.socket.emit('JOIN', eventName, function () {
+      console.log(`Joined ${eventName}`)
+    });
   }
 
 

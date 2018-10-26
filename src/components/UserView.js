@@ -3,12 +3,13 @@ import SuggestionList from './SuggestionList';
 import SuggestionCreate from './SuggestionCreate';
 import UserRegistration from './UserRegistration';
 import io from "socket.io-client";
+import Page404 from "./Page404";
 
 class UserView extends React.Component {
   constructor() {
     super();
     this.state = {
-      event: {},
+      event: null,
       suggestions: [],
       votes: {}
     }
@@ -45,12 +46,16 @@ class UserView extends React.Component {
     fetch(`/api/event/${eventId}`)
       .then(response => response.json())
       .then(body => {
-        this.setState({
-          event: body.event,
-          suggestions: body.suggestions,
-          votes: body.votes,
-          conductor: body.suggestions[0].name
-        }, () => this.broadcastSuggestions(this.state.suggestions, this.state.votes))
+        if (body.error) {
+          this.setState({ is404: true })
+        } else {
+          this.setState({
+            event: body.event,
+            suggestions: body.suggestions,
+            votes: body.votes,
+            conductor: body.suggestions[0].name
+          }, () => this.broadcastSuggestions(this.state.suggestions, this.state.votes))
+        }
       });
   }
 
@@ -95,13 +100,21 @@ class UserView extends React.Component {
 
 
   render() {
-  return (
-    <React.Fragment>
-      {!this.props.isMember &&
-        <UserRegistration registerUser={this.props.registerUser} event={this.state.event} />
-      }
-      {this.props.isMember &&
-        <React.Fragment>
+
+    // if (!this.state.event) {
+    //   return <div>Loading...</div>
+    // }
+
+    return (
+      <React.Fragment>
+        {this.state.is404
+         ? <Page404 />
+         : null}
+        {!this.props.isMember && !this.state.is404 &&
+          <UserRegistration registerUser={this.props.registerUser} event={this.state.event} />
+        }
+        {this.props.isMember && !this.state.is404 &&
+          <React.Fragment>
 
             <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} conductor={this.state.conductor} />
             <SuggestionCreate memberId={this.props.memberId} eventId={this.state.event.id} eventName={this.props.eventId} getEvent={this.getEvent} createNewSuggestion={this.props.createNewSuggestion} />

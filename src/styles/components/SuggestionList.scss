@@ -1,17 +1,29 @@
 @import '../base/_variables.scss';
-.list__header {
+.suggestionList {
     text-align: center;
-
 }
 .list__title {
     font-size: 1.5rem;
     color: $accent-color;
     span {
         color: lighten($accent-color, 30% );
-    &:first-child {
-        display: block;
-    }    
+        &:first-child {
+            display: block;
+        }    
     }
+}
+.list__all {
+}
+.list__organiser, .list__memberstitle {
+    color: lighten($primary-color, 30% );
+    margin: 0;
+    span {
+        color: $primary-color;
+        margin-left: $main-padding*0.3;
+    }
+}
+.list__members > li {
+font-family: $headline-font;
 }
 .suggestionlist__view {
     margin: $main-padding*3 0;

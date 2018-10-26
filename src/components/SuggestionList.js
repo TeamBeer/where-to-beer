@@ -8,6 +8,7 @@ const formatDate = require('date-fns/format')
       super();
     }
       render() {
+ 
       return (
         <React.Fragment>
 
@@ -20,6 +21,15 @@ const formatDate = require('date-fns/format')
                         <span>{formatDate(this.props.event.date_time, 'h.mm a')}</span>
                     </h2> 
                 </header>
+                <section className="list__all">
+                    <h4 className="list__organiser">Conductor<span>{this.props.conductor}</span></h4>
+                    {/* <h4 className="list__memberstitle">Orchestra</h4> */}
+                    {/* <ul className="list__members menu--settings">
+                        <li>Phil</li>
+                        <li>Dan</li>
+                        <li>Joe</li>
+                    </ul> */}
+                </section>
             
                 <section className="suggestionlist__view">
                     <header className="suggestionlist__header"> 

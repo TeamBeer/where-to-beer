@@ -110,10 +110,10 @@ class UserView extends React.Component {
         {this.state.is404
          ? <Page404 />
          : null}
-        {!this.props.isMember && !this.state.is404 &&
+        {!this.props.isMember && !this.state.is404 && this.state.event &&
           <UserRegistration registerUser={this.props.registerUser} event={this.state.event} />
         }
-        {this.props.isMember && !this.state.is404 &&
+        {this.props.isMember && !this.state.is404 && this.state.event &&
           <React.Fragment>
 
             <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} conductor={this.state.conductor} />

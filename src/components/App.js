@@ -74,7 +74,7 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => {
-        const urlToShare = `localhost:8080/event/${body.event.name}`
+        const urlToShare = `${window.location.origin}/event/${body.event.name}`
         this.setState({
           urlToShare,
           createdEvent: body,

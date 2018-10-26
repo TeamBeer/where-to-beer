@@ -4,7 +4,9 @@ import '../styles/components/EventConfirmation.scss';
 const formatDate = require('date-fns/format')
 
 
+
 function EventConfirmation({urlToShare, createdEvent}){
+      const urlLink = `http://${urlToShare}`
 
       return (
 
@@ -26,7 +28,7 @@ function EventConfirmation({urlToShare, createdEvent}){
                     {createdEvent.suggestions[0].reason}
                   </p>
                   
-                  <a className="confirm__sharelink" href={urlToShare} target="_blank" title="Share this link">{urlToShare}</a>
+                  <a className="confirm__sharelink" href={urlLink} target="_blank" title="Share this link">{urlToShare}</a>
 
                   <button className="confirm__edit btn btn">Edit your suggestion</button>
               </section>

@@ -32,7 +32,6 @@ const getEventFromDb = (eventName) => {
     db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = vote.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
   ])
     .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes }))
-    .catch((error) => { console.log(error) })
 }
 
 
@@ -123,9 +122,12 @@ app.delete('/api/vote', (req, res) => {
 
 // POST :: New Member
 app.post('/api/member', (req, res) => {
-  const { memberName } = req.body
+  const { memberName, eventId } = req.body
   db.one('INSERT INTO member (name) VALUES ($1) RETURNING id, name', [memberName])
-    .then(memberDetails => res.json(memberDetails))
+    .then(response => {
+      return db.one('INSERT INTO member_event (event_id, member_id) VALUES ($1, $2)',[eventId, response.id])
+      .then(()=> res.json(response))
+    })
     .catch(error => {
       res.json({ error: error.message });
     })
@@ -136,6 +138,16 @@ app.get('/api/member/:memberId', (req, res) => {
   const memberId = req.params.memberId
   db.one('SELECT * FROM member WHERE id = $1', [memberId])
     .then(memberDetails => res.json(memberDetails))
+    .catch((error) => {
+      res.json({ error: error.message })
+    })
+})
+
+// GET :: Member event
+app.get('/api/event/:id/members', (req, res) => {
+  const eventId = req.params.id
+  db.any('SELECT member_event.id, member.name FROM member_event, member WHERE event_id = $1 AND member.id = member_event.member_id Order By member_event.id', [eventId])
+    .then(members => res.json(members))
     .catch((error) => {
       res.json({ error: error.message })
     })

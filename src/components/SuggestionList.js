@@ -22,12 +22,13 @@ const formatDate = require('date-fns/format')
                     </h2> 
                 </header>
                 <section className="list__all">
-                    <h4 className="list__organiser">Conductor<span>Phil</span></h4><h4 className="list__memberstitle">Orchestra</h4>
-                    <ul className="list__members menu--settings">
+                    <h4 className="list__organiser">Conductor<span>{this.props.conductor}</span></h4>
+                    {/* <h4 className="list__memberstitle">Orchestra</h4> */}
+                    {/* <ul className="list__members menu--settings">
                         <li>Phil</li>
                         <li>Dan</li>
                         <li>Joe</li>
-                    </ul>
+                    </ul> */}
                 </section>
             
                 <section className="suggestionlist__view">

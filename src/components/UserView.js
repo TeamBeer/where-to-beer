@@ -48,7 +48,8 @@ class UserView extends React.Component {
         this.setState({
           event: body.event,
           suggestions: body.suggestions,
-          votes: body.votes
+          votes: body.votes,
+          conductor: body.suggestions[0].name
         }, () => this.broadcastSuggestions(this.state.suggestions, this.state.votes))
       });
   }
@@ -94,15 +95,15 @@ class UserView extends React.Component {
 
 
   render() {
-    return (
-      <React.Fragment>
-        {!this.props.isMember &&
-          <UserRegistration registerUser={this.props.registerUser} />
-        }
-        {this.props.isMember &&
-          <React.Fragment>
+  return (
+    <React.Fragment>
+      {!this.props.isMember &&
+        <UserRegistration registerUser={this.props.registerUser} event={this.state.event} />
+      }
+      {this.props.isMember &&
+        <React.Fragment>
 
-            <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} />
+            <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} conductor={this.state.conductor} />
             <SuggestionCreate memberId={this.props.memberId} eventId={this.state.event.id} eventName={this.props.eventId} getEvent={this.getEvent} createNewSuggestion={this.props.createNewSuggestion} />
           </React.Fragment>
         }
@@ -110,6 +111,5 @@ class UserView extends React.Component {
     )
   }
 }
-
 
 export default UserView;

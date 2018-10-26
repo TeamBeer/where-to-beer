@@ -32,4 +32,9 @@
         text-decoration: none;
         background-color:  lighten($accent-color, 10% );
     }
+    &--small {
+    font-size: 0.8rem;
+    padding: $main-padding *0.4;
+
+    }
 }

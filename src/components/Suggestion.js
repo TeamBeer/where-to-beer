@@ -12,10 +12,10 @@ const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
             <span className="suggestion__kicker">{suggestion.name} suggests&hellip;</span>
                   </h3>
                   {votes.filter((vote)=>vote.memberId===memberId).length < 1 && (
-          <button className="btn btn__vote" onClick={(e)=>(addVote(suggestion.id))}>+</button>
+          <button className="btn btn__vote btn--small" onClick={(e)=>(addVote(suggestion.id))}><i className="fas fa-plus"></i></button>
                   )}
                   {votes.filter((vote)=>vote.memberId===memberId).length > 0 && (
-          <button className="btn btn__vote" onClick={(e)=>(removeVote(suggestion.id))}>-</button>
+          <button className="btn btn__vote btn--small" onClick={(e)=>(removeVote(suggestion.id))}><i className="fas fa-minus"></i></button>
                   )}
           </header>
 
@@ -24,9 +24,11 @@ const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
             <h2 className="suggestion__pub-name"><span>{suggestion.venue_name}</span></h2>
             <h3 className="suggestion__pub-postcode"><span>{suggestion.postcode}</span></h3>
           </div>
+          {!!suggestion.reason && 
             <p className="suggestion__description">
-    {suggestion.reason}
-        </p>
+              {suggestion.reason}
+            </p>
+          }
           </div>
 
 
@@ -35,7 +37,7 @@ const Suggestion = ({suggestion, votes, addVote, removeVote, memberId}) => {
           <div className="suggestion__votes">
 
                   </div>
-          <ul className="suggestion__voters">
+          <ul className="suggestion__voters menu--settings">
           {votes.map(vote => {
             return <li className="suggestion__voter" key={vote.voteId}>{vote.memberName.charAt(0).toUpperCase()}</li>
           })}

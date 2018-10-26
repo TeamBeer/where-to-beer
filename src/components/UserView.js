@@ -3,6 +3,7 @@ import SuggestionList from './SuggestionList';
 import SuggestionCreate from './SuggestionCreate';
 import UserRegistration from './UserRegistration';
 import io from "socket.io-client";
+import Page404 from "./Page404";
 
 class UserView extends React.Component {
   constructor() {
@@ -96,10 +97,13 @@ class UserView extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {!this.props.isMember &&
+        {!this.state.event.hasOwnProperty("id")
+         ? <Page404 />
+         : null}
+        {!this.props.isMember && this.state.event.hasOwnProperty("id") &&
           <UserRegistration registerUser={this.props.registerUser} />
         }
-        {this.props.isMember &&
+        {this.props.isMember && this.state.event.hasOwnProperty("id") &&
           <React.Fragment>
 
             <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} />

@@ -1,6 +1,5 @@
 import React from "react";
 // import io from "socket.io-client";
-
 import Header from "./Header"
 import Footer from "./Footer"
 import '../styles/base/base.scss';
@@ -125,9 +124,10 @@ class App extends React.Component {
 
     return (
 
+
+
       <Router>
         <main>
-
           <Header />
           <Route path="/" exact render={({ match, history }) => {
             return <OrganiserView createdEvent={this.state.createdEvent}

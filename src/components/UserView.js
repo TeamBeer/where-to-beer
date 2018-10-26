@@ -2,44 +2,69 @@ import React from 'react';
 import SuggestionList from './SuggestionList';
 import SuggestionCreate from './SuggestionCreate';
 import UserRegistration from './UserRegistration';
+import io from "socket.io-client";
 
-  class UserView extends React.Component {
-    constructor() {
+class UserView extends React.Component {
+  constructor() {
     super();
-    this.state={
-      event:{},
-      suggestions:{},
-      votes:{}
+    this.state = {
+      event: {},
+      suggestions: [],
+      votes: {}
     }
 
-    this.getEvent = this.getEvent.bind(this)
-    this.addVote = this.addVote.bind(this)
-    this.removeVote = this.removeVote.bind(this)
-    }
+    this.getEvent = this.getEvent.bind(this);
+    this.addVote = this.addVote.bind(this);
+    this.removeVote = this.removeVote.bind(this);
+    this.broadcastSuggestions = this.broadcastSuggestions.bind(this);
+    // this.updateSuggestions = this.updateSuggestions.bind(this);
 
-    componentDidMount() {
-      this.getEvent(this.props.eventId)
-    }
+    this.socket = io(window.location.origin);
 
+    this.socket.on('RECEIVE_SUGGESTIONS', function (data) {
+      updateSuggestions(data);
+    });
 
-    getEvent(eventId) {
-    fetch(`/api/event/${eventId}`)
-    .then(response => response.json())
-    .then(body => {
+    const updateSuggestions = data => {
       this.setState({
-          event:body.event,
-          suggestions:body.suggestions,
-          votes:body.votes
+        suggestions: data.suggestions,
+        votes: data.votes
       })
+    };
+  }
+
+  componentDidMount() {
+    this.getEvent(this.props.eventId);
+    const eventName = this.props.eventId;
+    this.socket.emit('JOIN', eventName);
+  }
+
+
+
+  getEvent(eventId) {
+    fetch(`/api/event/${eventId}`)
+      .then(response => response.json())
+      .then(body => {
+        this.setState({
+          event: body.event,
+          suggestions: body.suggestions,
+          votes: body.votes
+        }, () => this.broadcastSuggestions(this.state.suggestions, this.state.votes))
+      });
+  }
+
+  broadcastSuggestions(suggestions, votes) {
+    const eventName = this.props.eventId;
+    this.socket.emit('SEND_SUGGESTIONS', eventName, {
+      suggestions,
+      votes
     })
   }
 
   addVote(suggestionId) {
-    console.log(this.props.memberId)
-    console.log(this.state.votes)
     fetch('/api/vote', {
       method: 'post',
-      body: JSON.stringify({suggestionId:suggestionId,memberId:this.props.memberId}),
+      body: JSON.stringify({ suggestionId: suggestionId, memberId: this.props.memberId }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -56,7 +81,7 @@ import UserRegistration from './UserRegistration';
     console.log(this.state.votes)
     fetch('/api/vote', {
       method: 'delete',
-      body: JSON.stringify({suggestionId:suggestionId,memberId:this.props.memberId}),
+      body: JSON.stringify({ suggestionId: suggestionId, memberId: this.props.memberId }),
       headers: {
         'Content-Type': 'application/json'
       }
@@ -67,24 +92,23 @@ import UserRegistration from './UserRegistration';
       .catch(console.error)
   }
 
-// const UserView = ({ isMember, registerUser, memberName, event, suggestions, votes, eventId }) => {
-//   console.log(eventId)
 
   render() {
-  return (
-    <React.Fragment>
-      {!this.props.isMember &&
-        <UserRegistration registerUser={this.props.registerUser} />
-      }
-      {this.props.isMember &&
-        <React.Fragment>
+    return (
+      <React.Fragment>
+        {!this.props.isMember &&
+          <UserRegistration registerUser={this.props.registerUser} />
+        }
+        {this.props.isMember &&
+          <React.Fragment>
 
-          <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} />
-          <SuggestionCreate memberId={this.props.memberId} eventId={this.state.event.id} eventName={this.props.eventId} getEvent={this.getEvent} createNewSuggestion={this.props.createNewSuggestion} />
-        </React.Fragment>
-      }
-    </React.Fragment>
-  )}
+            <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} />
+            <SuggestionCreate memberId={this.props.memberId} eventId={this.state.event.id} eventName={this.props.eventId} getEvent={this.getEvent} createNewSuggestion={this.props.createNewSuggestion} />
+          </React.Fragment>
+        }
+      </React.Fragment>
+    )
+  }
 }
 
 

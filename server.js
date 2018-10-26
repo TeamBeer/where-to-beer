@@ -1,17 +1,22 @@
 require('dotenv').config();
 
 const express = require('express');
+
 const bodyParser = require('body-parser');
 const pgp = require('pg-promise')();
+
 const app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
 const db = pgp({
   host: process.env.DB_HOST || 'localhost',
   port: 5432,
   database: process.env.DB_NAME,
   user: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD
-
 });
+
 
 app.use(bodyParser.json());
 app.use('/static', express.static('static'));
@@ -20,14 +25,14 @@ app.set('view engine', 'hbs');
 
 // This function is shared by both the Post and Get routes for event
 const getEventFromDb = (eventName) => {
-  
+
   return Promise.all([
     db.one('SELECT * FROM event WHERE name = $1', [eventName]),
     db.any('SELECT suggestion.venue_name, suggestion.reason, suggestion.postcode, member.name, suggestion.id AS "id", event.id  AS "event_id" FROM suggestion, member, event WHERE event.name = $1 AND suggestion.member_id = member.id AND event.id = suggestion.event_id', [eventName]),
     db.any('SELECT  event.id AS "eventId", vote.id AS "voteId" , suggestion.id AS "suggestionId", member.id AS "memberId", member.name AS "memberName" FROM vote, member, suggestion, event WHERE event.name = $1 AND vote.suggestion_id = suggestion.id AND event.id = suggestion.event_id AND member.id = vote.member_id GROUP BY event.id, suggestion.id, vote.id, member.name, member.id', [eventName])
   ])
     .then(([event, suggestions, votes]) => ({ event: event, suggestions: suggestions, votes: votes }))
-    .catch((error) => {console.log(error)})
+    .catch((error) => { console.log(error) })
 }
 
 
@@ -98,7 +103,6 @@ app.post('/api/suggestion', (req, res) => {
 // POST :: Vote on Suggestion
 app.post('/api/vote', (req, res) => {
   const { memberId, suggestionId } = req.body
-  console.log(memberId, suggestionId)
   db.one('INSERT INTO vote (suggestion_Id, member_Id) VALUES ($1, $2) RETURNING id', [suggestionId, memberId])
     .then(voteId => res.json(voteId))
     .catch(error => {
@@ -141,7 +145,17 @@ app.use((req, res) => {
   res.render('index');
 });
 
+io.sockets.on('connection', socket => {
+  socket.on('JOIN', function (channel) {
+    socket.join(channel);
+  });
+
+  socket.on('SEND_SUGGESTIONS', function (channel, data) {
+    socket.broadcast.to(channel).emit('RECEIVE_SUGGESTIONS', data);
+  })
+})
+
 const port = process.env.PORT || 8080;
-app.listen(port, function () {
+http.listen(port, function () {
   console.log(`Listening on port number ${port}`);
 });

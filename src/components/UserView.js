@@ -36,9 +36,7 @@ class UserView extends React.Component {
   componentDidMount() {
     this.getEvent(this.props.eventId);
     const eventName = this.props.eventId;
-    this.socket.emit('JOIN', eventName, function () {
-      console.log(`Joined ${eventName}`)
-    });
+    this.socket.emit('JOIN', eventName);
   }
 
 
@@ -56,7 +54,8 @@ class UserView extends React.Component {
   }
 
   broadcastSuggestions(suggestions, votes) {
-    this.socket.emit('SEND_SUGGESTIONS', {
+    const eventName = this.props.eventId;
+    this.socket.emit('SEND_SUGGESTIONS', eventName, {
       suggestions,
       votes
     })

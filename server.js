@@ -148,42 +148,38 @@ app.use((req, res) => {
   res.render('index');
 });
 
-//
-// io.configure(function () {
-//   io.set('transports', ['websocket']);
-// });
 
 
 io.sockets.on('connection', socket => {
-  // console.log('User connected');
-  // console.log(socket.id);
-  socket.on('JOIN', function (channel, ack) {
-    socket.get('channel', function (err, oldChannel) {
-      if (err) {
-        socket.emit('error', err);
-      }
-      else if (oldChannel) {
-        socket.leave(oldChannel);
-      }
-      socket.set('channel', channel, function () {
-        socket.join(channel);
-        ack(`Woot! User joined ${channel}`);
-      });
-    });
+  console.log('User connected');
+  console.log(socket.id);
+  socket.on('JOIN', function (channel) {
+    console.log(channel);
+    // socket.get('channel', function (err, oldChannel) {
+    //   if (err) {
+    //     socket.emit('error', err);
+    //   }
+    //   else if (oldChannel) {
+    //     socket.leave(oldChannel);
+    //   }
+    // socket.set('channel', channel, function () {
+    socket.join(channel);
+
+    // });
+    // });
   });
 
-  socket.on('SEND_SUGGESTIONS', function (data, ack) {
+  socket.on('SEND_SUGGESTIONS', function (channel, data) {
     // io.emit('RECEIVE_SUGGESTIONS', data);
-    socket.get('channel', function (err, channel) {
-      if (err) {
-        socket.emit('error', err);
-      } else if (channel) {
-        socket.broadcast.to(channel).emit('RECEIVE_SUGGESTIONS', data);
-        ack();
-      } else {
-        socket.emit('error', 'no channel');
-      }
-    });
+    // socket.get('channel', function (err, channel) {
+    // if (err) {
+    //   socket.emit('error', err);
+    // } else if (channel) {
+    socket.broadcast.to(channel).emit('RECEIVE_SUGGESTIONS', data);
+    // } else {
+    //   socket.emit('error', 'no channel');
+    // }
+    // });
   })
 
   socket.on('disconnect', () => {

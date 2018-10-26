@@ -146,17 +146,12 @@ app.use((req, res) => {
 });
 
 io.sockets.on('connection', socket => {
-  console.log('user connected')
   socket.on('JOIN', function (channel) {
     socket.join(channel);
   });
 
   socket.on('SEND_SUGGESTIONS', function (channel, data) {
     socket.broadcast.to(channel).emit('RECEIVE_SUGGESTIONS', data);
-  })
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
   })
 })
 

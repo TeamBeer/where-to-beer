@@ -19,7 +19,7 @@ class UserView extends React.Component {
     this.broadcastSuggestions = this.broadcastSuggestions.bind(this);
     // this.updateSuggestions = this.updateSuggestions.bind(this);
 
-    this.socket = io(process.env.HOST_DOMAIN || 'http://localhost:8080');
+    this.socket = io(window.location.origin);
 
     this.socket.on('RECEIVE_SUGGESTIONS', function (data) {
       updateSuggestions(data);

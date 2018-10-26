@@ -1,4 +1,6 @@
 import React from "react";
+// import io from "socket.io-client";
+
 import Header from "./Header"
 import Footer from "./Footer"
 import '../styles/base/base.scss';
@@ -7,16 +9,9 @@ import OrganiserView from "./OrganiserView"
 import UserView from "./UserView"
 
 const { adjArr, nounArr } = require('../wordarrays.js');
-
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 
-
-
-const shortid = require('shortid')
-
 import '../styles/components/App.scss';
-
-
 
 class App extends React.Component {
   constructor() {
@@ -26,13 +21,16 @@ class App extends React.Component {
       urlToShare: "", //populated by createNewEvent when form is submitted
       isMember: false, // controlled by registerUser when name submitted
       memberId: 0,
-      display: "creation" //'creation' or 'confirmation' or 'userView'
+      display: "creation", //'creation' or 'confirmation' or 'userView'
+      toggle: false
     }
-
     this.createNewEvent = this.createNewEvent.bind(this)
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
     this.createNewSuggestion = this.createNewSuggestion.bind(this);
+
+
+
   }
 
   componentDidMount() {
@@ -87,7 +85,6 @@ class App extends React.Component {
   }
 
 
-
   registerUser(e, memberName) {
     e.preventDefault();
     const memberData = { memberName };
@@ -113,7 +110,6 @@ class App extends React.Component {
 
 
   createNewSuggestion(newSuggestion) {
-    console.log('fetch')
     fetch('/api/suggestion', {
       method: 'post',
       body: JSON.stringify(newSuggestion),
@@ -144,7 +140,6 @@ class App extends React.Component {
           />
 
           <Route path="/event/:eventId" render={({ match, history }) => {
-            console.log(match.params.eventId)
             return <UserView memberId={this.state.memberId}
               eventId={match.params.eventId}
               isMember={this.state.isMember}

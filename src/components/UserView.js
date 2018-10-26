@@ -26,14 +26,11 @@ class UserView extends React.Component {
     });
 
     const updateSuggestions = data => {
-
       this.setState({
         suggestions: data.suggestions,
         votes: data.votes
       })
-
     };
-
   }
 
   componentDidMount() {
@@ -54,10 +51,10 @@ class UserView extends React.Component {
       });
   }
 
-  broadcastSuggestions(venueSuggestions, venueVotes) {
+  broadcastSuggestions(suggestions, votes) {
     this.socket.emit('SEND_SUGGESTIONS', {
-      suggestions: venueSuggestions,
-      votes: venueVotes
+      suggestions,
+      votes
     })
   }
 

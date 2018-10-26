@@ -7,21 +7,33 @@
 .confirm__suggestion {
     margin: 0 auto;
 }
-
-.confirm__header {
-    text-align: center;
-}
 .confirm__title {
     font-size: 1.5rem;
     color: $accent-color;
     span {
         color: lighten($accent-color, 30% );
-    &:first-child {
-        display: block;
-    }    
+        &:first-child {
+            display: block;
+        }    
     }
 }
-.confirm__sharelink {
+
+.suggestion__venue {
+    font-size: 2rem;
+    color: $primary-color;
+    position: relative;
+    padding-top: 1rem;
+    margin: $main-padding*3 0 0;
+    span {
+        top: -1rem;
+        font-size: 1rem;
+        color: $light-color;
+        position: absolute;
+        text-align: center;
+    }
+}
+
+.suggestion__sharelink {
     display: block;
     padding: $main-padding;
     margin-bottom: $main-padding;

@@ -21,7 +21,6 @@ import UserRegistration from './UserRegistration';
       this.getEvent(this.props.eventId)
     }
 
-
     getEvent(eventId) {
     fetch(`/api/event/${eventId}`)
     .then(response => response.json())
@@ -74,7 +73,7 @@ import UserRegistration from './UserRegistration';
   return (
     <React.Fragment>
       {!this.props.isMember &&
-        <UserRegistration registerUser={this.props.registerUser} />
+        <UserRegistration registerUser={this.props.registerUser} event={this.state.event} />
       }
       {this.props.isMember &&
         <React.Fragment>
@@ -86,6 +85,5 @@ import UserRegistration from './UserRegistration';
     </React.Fragment>
   )}
 }
-
 
 export default UserView;

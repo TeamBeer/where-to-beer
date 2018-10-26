@@ -88,9 +88,9 @@ class App extends React.Component {
 
 
 
-  registerUser(e, memberName) {
+  registerUser(e, memberName, eventId) {
     e.preventDefault();
-    const memberData = { memberName };
+    const memberData = { memberName, eventId };
     fetch('/api/member', {
       method: 'post',
       body: JSON.stringify(memberData),

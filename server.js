@@ -122,11 +122,11 @@ app.delete('/api/vote', (req, res) => {
 
 // POST :: New Member
 app.post('/api/member', (req, res) => {
-  const { memberName, eventId } = req.body
+  const { memberName, eventId } = req.body;
   db.one('INSERT INTO member (name) VALUES ($1) RETURNING id, name', [memberName])
     .then(response => {
-      return db.one('INSERT INTO member_event (event_id, member_id) VALUES ($1, $2)',[eventId, response.id])
-      .then(()=> res.json(response))
+      return db.one('INSERT INTO member_event (event_id, member_id) VALUES ($1, $2) RETURNING member_id', [eventId, response.id])
+        .then(response => res.json(response))
     })
     .catch(error => {
       res.json({ error: error.message });

@@ -9,7 +9,7 @@ class UserView extends React.Component {
   constructor() {
     super();
     this.state = {
-      event: {},
+      event: null,
       suggestions: [],
       votes: {}
     }
@@ -107,13 +107,13 @@ class UserView extends React.Component {
 
     return (
       <React.Fragment>
-        {/* {this.state.is404
-         ? <Page404 />
-         : null} */}
-        {!this.props.isMember && this.state.event &&
+        {this.state.is404
+          ? <Page404 />
+          : null}
+        {!this.props.isMember && !this.state.is404 && this.state.event &&
           <UserRegistration registerUser={this.props.registerUser} event={this.state.event} />
         }
-        {this.props.isMember && this.state.event &&
+        {this.props.isMember && !this.state.is404 && this.state.event &&
           <React.Fragment>
 
             <SuggestionList getEvent={this.getEvent} eventId={this.props.eventId} event={this.state.event} suggestions={this.state.suggestions} votes={this.state.votes} addVote={this.addVote} removeVote={this.removeVote} memberId={this.props.memberId} conductor={this.state.conductor} />

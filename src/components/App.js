@@ -38,16 +38,18 @@ class App extends React.Component {
 
 
   initialFetch() {
-    const fromStorage = localStorage.getItem('memberId')
+    const fromStorage = localStorage.getItem('memberId');
+    console.log(fromStorage);
     if (fromStorage) {
       const { memberId } = JSON.parse(fromStorage);
+      console.log(memberId);
       return fetch(`/api/member/${memberId}`)
         .then(response => response.json())
         .then(body => {
           this.setState({
             isMember: true,
-            memberId: body.id,
-            memberName: body.name
+            memberId: body.id
+            // memberName: body.name
           })
         })
         .catch(console.error)
@@ -88,6 +90,8 @@ class App extends React.Component {
   registerUser(e, memberName, eventId) {
     e.preventDefault();
     const memberData = { memberName, eventId };
+    console.log(memberData);
+    console.log(JSON.stringify(memberData));
     fetch('/api/member', {
       method: 'post',
       body: JSON.stringify(memberData),
@@ -97,12 +101,14 @@ class App extends React.Component {
     })
       .then(response => response.json())
       .then(body => {
+        console.log(body);
         this.setState({
           isMember: true,
-          memberId: body.id,
-          memberName: body.name
+          memberId: body.member_id
+          // memberName: body.name
         })
-        const member = JSON.stringify({ memberId: body.id })
+        const member = JSON.stringify({ memberId: body.member_id })
+        console.log(member);
         localStorage.setItem('memberId', member)
       })
       .catch(console.error)

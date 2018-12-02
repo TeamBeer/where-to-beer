@@ -21,13 +21,11 @@ describe('App', () => {
     test('Initial state eventData should only contain a default time', () => {
       expect(instance.state).toEqual({
         createdEvent: {},
-        urlToShare: "", //populated by createNewEvent when form is submitted
-        isMember: false, // controlled by registerUser when name submitted
+        urlToShare: "",
+        isMember: false,
         memberId: 0,
-        event: {},
-        suggestions: {},
-        votes: {},
-        display: "creation" //'creation' or 'confirmation' or 'userView'
+        display: "creation",
+        toggle: false
       })
     });
 
@@ -37,10 +35,17 @@ describe('App', () => {
       fetch.mockResponse(JSON.stringify(memberData));
       return instance.initialFetch().then(() => {
         expect(fetch).toHaveBeenCalledWith('/api/member/23')
-        expect(wrapper.state()).toMatchObject({ isMember: true, memberId: 23, memberName: "Joe" });
+        expect(wrapper.state()).toMatchObject({
+          createdEvent: {},
+          urlToShare: "",
+          isMember: true,
+          memberId: 23,
+          display: "creation",
+          toggle: false
+        });
       })
     })
-  })
+  });
 
   // TODO: onSubmit
 
@@ -50,7 +55,4 @@ describe('App', () => {
 
   // TODO: registerUser
 
-
-
-})
-
+});

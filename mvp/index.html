@@ -1,125 +1,197 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
     <title>Beer?</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/" rel="stylesheet">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+      integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/" rel="stylesheet" />
   </head>
   <body>
     <div id="root">
+      <header className="app__header">
+        <h1 className="app__title">Beer?</h1>
+      </header>
 
-        <header className="app__header">
-            <h1 className="app__title">Beer?</h1>
+      <!-- organiser-setup -->
+      <section className="organiserSetup">
+        <header className="setup__header">
+          <p>Organise at drink&hellip; all fields required unless stated</p>
         </header>
 
-        <!-- organiser-setup -->
-        <section className="organiserSetup">
-            <header className="setup__header">
-                <p>Organise at drink&hellip; all fields required unless stated</p>
-            </header>
+        <form className="setupform">
+          <div>
+            <label className="setupform__namelabel" for="name">Name</label>
+            <input
+              className="setupform__name"
+              type="text"
+              name="name"
+              value=""
+              placeholder="NAME"
+              required
+            />
+          </div>
+          <div>
+            <label className="setupform__datelabel" for="date">Date</label>
+            <input
+              className="setupform__date"
+              type="date"
+              name="date"
+              value=""
+              placeholder="DATE"
+              required
+            />
+          </div>
+          <div>
+            <label className="setupform__timelabel" for="time">Time</label>
+            <input
+              className="setupform__time"
+              type="time"
+              name="time"
+              value=""
+              placeholder="TIME"
+              required
+            />
+          </div>
+          <div>
+            <label className="setupform__venuelabel" for="time">Pub Name</label>
+            <input
+              className="setupform__venue"
+              type="text"
+              name="venue"
+              value=""
+              placeholder="PUB NAME"
+              required
+            />
+          </div>
+          <div>
+            <label className="setupform__postcodelabel" for="postcode"
+              >Postcode</label
+            >
+            <input
+              className="setupform__postcode"
+              type="text"
+              name="postcode"
+              value=""
+              placeholder="POSTCODE"
+              required
+            />
+          </div>
+          <div>
+            <label className="ssetupform__commentlabel" for="comment"
+              >Postcode</label
+            >
+            <textarea
+              className="setupform__comment"
+              name="comment"
+              placeholder="Comment (optional)"
+            ></textarea>
+          </div>
+          <div>
+            <button className="setupform__btn btn" type="submit" value="">
+              Create
+            </button>
+          </div>
+        </form>
+      </section>
 
-            <form className="setupform">
-                    <div>
-                        <label className="setupform__namelabel" for="name">Name</label>
-                        <input className="setupform__name" type="text" name="name" value="" placeholder="NAME" required />
-                    </div> 
-                    <div>
-                        <label className="setupform__datelabel" for="date">Date</label>
-                        <input className="setupform__date" type="date" name="date" value="" placeholder="DATE" required />
-                    </div>  
-                    <div>
-                        <label className="setupform__timelabel" for="time">Time</label>
-                        <input className="setupform__time" type="time" name="time" value="" placeholder="TIME" required />
-                    </div>
-                    <div>
-                        <label className="setupform__venuelabel" for="time">Pub Name</label>
-                            <input className="setupform__venue" type="text" name="venue" value="" placeholder="PUB NAME" required />
-                    </div>           
-                    <div>
-                        <label className="setupform__postcodelabel" for="postcode">Postcode</label>
-                        <input className="setupform__postcode" type="text" name="postcode" value="" placeholder="POSTCODE" required />
-                    </div>
-                    <div>
-                        <label className="ssetupform__commentlabel" for="comment">Postcode</label>
-                        <textarea className="setupform__comment" name="comment" placeholder="Comment (optional)"></textarea>
-                    </div>
-                    <div>
-                        <button className="setupform__btn btn" type="submit" value="">Create</button>
-                    </div>
-                </form>
+      <!-- organiser-confirmation -->
+      <section className="organiserConfirm">
+        <header className="confirm__header">
+          <h2>Let's meet on Friday 26 October at 7pm</h2>
+        </header>
+
+        <h3>Your suggestion</h3>
+        <p>The Star and Garter<span>W1F 7NX</span></p>
+
+        <button className="confirm__editbtn btn">Edit</button>
+        <button className="confirm__linkbtn btn">Get Invite Link</button>
+
+        <p className="confirm__viewlink">http://fancyapint.com/electric-dog</p>
+      </section>
+
+      <!-- /electric-dog -->
+      <section className="event">
+        <header className="event__header">
+          <h2>Let's meet on Friday 26 October at 7pm</h2>
+        </header>
+        <section className="event__suggestions">
+          <article className="suggestion__block">
+            <header className="suggestion_header">
+              <h3 className="suggestion_title">The Star and Garter</h3>
+            </header>
+            <p>It's got a nice quiet room upstairs so we should get a seat</p>
+            <footer>
+              <div><span>1</span> Votes</div>
+              <ul>
+                <li>P</li>
+                <li>M</li>
+              </ul>
+            </footer>
+          </article>
         </section>
 
-        <!-- organiser-confirmation -->
-        <section className="organiserConfirm">
-            <header className="confirm__header">
-                <h2>Let's meet on Friday 26 October at 7pm</h2>
-            </header>
-            
-            <h3>Your suggestion</h3>
-            <p>The Star and Garter<span>W1F 7NX</span></p>
-
-            <button className="confirm__editbtn btn">Edit</button>
-            <button className="confirm__linkbtn btn">Get Invite Link</button>
-
-            <p className="confirm__viewlink">http://fancyapint.com/electric-dog</p>
+        <section className="eventSuggest">
+          <h3>Make a suggestion</h3>
+          <form className="eventform">
+            <div>
+              <label className="eventform__namelabel" for="name">Name</label>
+              <input
+                className="eventform__name"
+                type="text"
+                name="name"
+                value=""
+                placeholder="NAME"
+                required
+              />
+            </div>
+            <div>
+              <label className="eventform__venuelabel" for="time"
+                >Pub Name</label
+              >
+              <input
+                className="setupform__venue"
+                type="text"
+                name="venue"
+                value=""
+                placeholder="PUB NAME"
+                required
+              />
+            </div>
+            <div>
+              <label className="eventform__postcodelabel" for="postcode"
+                >Postcode</label
+              >
+              <input
+                className="eventform__poeventformstcode"
+                type="text"
+                name="postcode"
+                value=""
+                placeholder="POSTCODE"
+              />
+            </div>
+            <div>
+              <textarea
+                className="eventform__comment"
+                name="comment"
+                placeholder="Comment (optional)"
+              ></textarea>
+            </div>
+            <div>
+              <button className="setupform__btn btn" type="submit" value="">
+                Create
+              </button>
+            </div>
+          </form>
         </section>
-        
-        <!-- /electric-dog -->
-        <section className="event">
-            <header className="event__header">
-                <h2>Let's meet on Friday 26 October at 7pm</h2>
-            </header>
-            <section className="event__suggestions">
-                <article className="suggestion__block">
-                    <header className="suggestion_header">
-                        <h3 className="suggestion_title">
-                          The Star and Garter
-                        </h3>
-                    </header>
-                        <p>
-                            It's got a nice  quiet room upstairs so we should get a seat
-                        </p>
-                    <footer>
-                        <div>
-                            <span>1</span> Votes
-                        </div>
-                        <ul>
-                            <li>P</li>
-                            <li>M</li>
-                        </ul>
-                    </footer>
-                </article>
-            </section>
-
-
-                    <section className="eventSuggest">
-                    <h3>Make a suggestion</h3>
-                    <form className="eventform">
-                            <div>
-                                <label className="eventform__namelabel" for="name">Name</label>
-                                <input className="eventform__name" type="text" name="name" value="" placeholder="NAME" required />
-                            </div> 
-                            <div>
-                                <label className="eventform__venuelabel" for="time">Pub Name</label>
-                                    <input className="setupform__venue" type="text" name="venue" value="" placeholder="PUB NAME" required />
-                            </div>           
-                            <div>
-                                <label className="eventform__postcodelabel" for="postcode">Postcode</label>
-                                <input className="eventform__poeventformstcode" type="text" name="postcode" value="" placeholder="POSTCODE" />
-                            </div>
-                            <div>
-                                <textarea className="eventform__comment" name="comment" placeholder="Comment (optional)"></textarea>
-                            </div>
-                            <div>
-                                <button className="setupform__btn btn" type="submit" value="">Create</button>
-                            </div>
-                        </form>
-                    </section>
-            </section>
-
-
-
+      </section>
     </div>
     <script src="/static/bundle.js"></script>
   </body>

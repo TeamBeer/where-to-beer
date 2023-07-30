@@ -1,69 +1,66 @@
-@import '../base/_variables.scss';
-@import '../base/_button.scss';
+@import "../base/_variables.scss";
+@import "../base/_button.scss";
 
 .organiserConfirm {
-    text-align: center;
+  text-align: center;
 }
 .confirm__suggestion {
-    margin: 0 auto;
+  margin: 0 auto;
 }
 .confirm__title {
-    font-size: 1.5rem;
-    color: $accent-color;
-    span {
-        color: lighten($accent-color, 30% );
-        &:first-child {
-            display: block;
-        }    
+  font-size: 1.5rem;
+  color: $accent-color;
+  span {
+    color: lighten($accent-color, 30%);
+    &:first-child {
+      display: block;
     }
+  }
 }
 
 .suggestion__venue {
-    font-size: 2rem;
-    color: $primary-color;
-    position: relative;
-    padding-top: 1rem;
-    margin: $main-padding*3 0 0;
-    span {
-        top: -1rem;
-        font-size: 1rem;
-        color: $light-color;
-        position: absolute;
-        text-align: center;
-    }
+  font-size: 2rem;
+  color: $primary-color;
+  position: relative;
+  padding-top: 1rem;
+  margin: $main-padding * 3 0 0;
+  span {
+    top: -1rem;
+    font-size: 1rem;
+    color: $light-color;
+    position: absolute;
+    text-align: center;
+  }
 }
 
 .suggestion__sharelink {
-    display: block;
-    padding: $main-padding;
-    margin-bottom: $main-padding;
-    border: 2px dashed $light-color;
-    color: $primary-color;
-    
-    &:hover {
-        border: 2px dashed lighten($primary-color, 30% );
-        color: lighten($primary-color, 30% );
-    }
+  display: block;
+  padding: $main-padding;
+  margin-bottom: $main-padding;
+  border: 2px dashed $light-color;
+  color: $primary-color;
 
+  &:hover {
+    border: 2px dashed lighten($primary-color, 30%);
+    color: lighten($primary-color, 30%);
+  }
 }
-
 
 // MEDIA QUERIES
 @media (min-width: 768px) {
-    .confirm__suggestion {
-        max-width: 80%;
-    }
+  .confirm__suggestion {
+    max-width: 80%;
+  }
 }
 
 @media (min-width: 960px) {
-    
 }
 
 @media (min-width: 1200px) {
-    .confirm__suggestion {
-        max-width: 50%;
-    }
+  .confirm__suggestion {
+    max-width: 50%;
+  }
 }
 
 @media (min-width: 1440px) {
-}  
+}

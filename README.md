@@ -1,21 +1,22 @@
 # Beer?
 
-__*Beer?*__ is a web app to help groups of friends decide upon a place to drink. It was born out of a desire to dispense with those drawn-out discussions on social media when trying to agree a venue.
+**_Beer?_** is a web app to help groups of friends decide upon a place to drink. It was born out of a desire to dispense with those drawn-out discussions on social media when trying to agree a venue.
 
 > View live demo [https://where-to-beer.herokuapp.com/](https://where-to-beer.herokuapp.com/)
-
 
 ## About
 
 _Beer?_ provides a user-friendly platform for the event organiser to create an event, suggest a venue and share a link to a unique event page with their friends. Upon following this link, friends are able to suggest alternative pubs/venues, give reasons why and upvote each other’s suggestions.
 
-__Team members__
+**Team members**
+
 - [Phil Berryman](https://github.com/philberryman)
 - [Joe Lamb](https://github.com/lemonydesign)
 - [Mel Ashby](https://github.com/lemonydesign)
 - [Dan Geraghty](https://github.com/DanGRT)
 
 ## Installation & setup
+
 - Clone this repo and run `npm install` to download the dependencies.
 - Create a local PostgreSQL database and run the query in the `database.sql` file to set up the tables.
 - Create a `.env` file at the root level of the app folder and add the following variables:
@@ -27,6 +28,7 @@ DB_PASSWORD=
 ```
 
 ## Technology
+
 - React
 - Express
 - Node.js
@@ -37,6 +39,7 @@ DB_PASSWORD=
 ---
 
 ## Features
+
 - Intuitive, mobile-first design.
 - Events, members, venues and votes are held in a relational database.
 - Unique, memmorable shareable event links are dynamically generated from adjective/noun combinations.
@@ -47,6 +50,7 @@ DB_PASSWORD=
 ---
 
 ## Future Plans
+
 - Integration with GoogleMaps API to make venue suggestions easier.
 - Password protection to give additional security to user login.
 - Threading of discussion in relation to specific venues.

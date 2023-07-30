@@ -1,16 +1,16 @@
 import React from "react";
 // import io from "socket.io-client";
-import Header from "./Header"
-import Footer from "./Footer"
-import '../styles/base/base.scss';
-import '../styles/base/forms.scss';
-import OrganiserView from "./OrganiserView"
-import UserView from "./UserView"
+import Header from "./Header";
+import Footer from "./Footer";
+import "../styles/base/base.scss";
+import "../styles/base/forms.scss";
+import OrganiserView from "./OrganiserView";
+import UserView from "./UserView";
 
-const { adjArr, nounArr } = require('../wordarrays.js');
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+const { adjArr, nounArr } = require("../wordarrays.js");
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import '../styles/components/App.scss';
+import "../styles/components/App.scss";
 
 class App extends React.Component {
   constructor() {
@@ -21,38 +21,34 @@ class App extends React.Component {
       isMember: false, // controlled by registerUser when name submitted
       memberId: 0,
       display: "creation", //'creation' or 'confirmation' or 'userView'
-      toggle: false
-    }
-    this.createNewEvent = this.createNewEvent.bind(this)
+      toggle: false,
+    };
+    this.createNewEvent = this.createNewEvent.bind(this);
     this.registerUser = this.registerUser.bind(this);
     this.uniqueEventName = this.uniqueEventName.bind(this);
     this.createNewSuggestion = this.createNewSuggestion.bind(this);
-
-
-
   }
 
   componentDidMount() {
-    this.initialFetch()
+    this.initialFetch();
   }
 
-
   initialFetch() {
-    const fromStorage = localStorage.getItem('memberId');
+    const fromStorage = localStorage.getItem("memberId");
     console.log(fromStorage);
     if (fromStorage) {
       const { memberId } = JSON.parse(fromStorage);
       console.log(memberId);
       return fetch(`/api/member/${memberId}`)
-        .then(response => response.json())
-        .then(body => {
+        .then((response) => response.json())
+        .then((body) => {
           this.setState({
             isMember: true,
-            memberId: body.id
+            memberId: body.id,
             // memberName: body.name
-          })
+          });
         })
-        .catch(console.error)
+        .catch(console.error);
     }
   }
 
@@ -66,100 +62,105 @@ class App extends React.Component {
 
   // On page load, initial user/group starter will fill out form, and on form submit, will run the following function to post to database
   createNewEvent(eventData) {
-    fetch('/api/event', {
-      method: 'post',
+    fetch("/api/event", {
+      method: "post",
       body: JSON.stringify(eventData),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
-      .then(body => {
-        const urlToShare = `${window.location.origin}/event/${body.event.name}`
+      .then((response) => response.json())
+      .then((body) => {
+        const urlToShare = `${window.location.origin}/event/${body.event.name}`;
         this.setState({
           urlToShare,
           createdEvent: body,
-          display: 'confirmation',
-        })
+          display: "confirmation",
+        });
       })
-      .catch(console.error)
+      .catch(console.error);
   }
-
-
 
   registerUser(e, memberName, eventId) {
     e.preventDefault();
     const memberData = { memberName, eventId };
     console.log(memberData);
     console.log(JSON.stringify(memberData));
-    fetch('/api/member', {
-      method: 'post',
+    fetch("/api/member", {
+      method: "post",
       body: JSON.stringify(memberData),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
-      .then(body => {
+      .then((response) => response.json())
+      .then((body) => {
         console.log(body);
         this.setState({
           isMember: true,
-          memberId: body.member_id
+          memberId: body.member_id,
           // memberName: body.name
-        })
-        const member = JSON.stringify({ memberId: body.member_id })
+        });
+        const member = JSON.stringify({ memberId: body.member_id });
         console.log(member);
-        localStorage.setItem('memberId', member)
+        localStorage.setItem("memberId", member);
       })
-      .catch(console.error)
+      .catch(console.error);
   }
 
-
   createNewSuggestion(newSuggestion) {
-    fetch('/api/suggestion', {
-      method: 'post',
+    fetch("/api/suggestion", {
+      method: "post",
       body: JSON.stringify(newSuggestion),
       headers: {
-        'Content-Type': 'application/json'
-      }
+        "Content-Type": "application/json",
+      },
     })
-      .then(response => response.json())
-      .catch(console.error)
+      .then((response) => response.json())
+      .catch(console.error);
   }
 
   render() {
-
     return (
-
-
-
       <Router>
         <main>
           <Header />
-          <Route path="/" exact render={({ match, history }) => {
-            return <OrganiserView createdEvent={this.state.createdEvent}
-              eventData={this.state.eventData}
-              createNewEvent={this.createNewEvent}
-              urlToShare={this.state.urlToShare}
-              uniqueEventName={this.uniqueEventName}
-              display={this.state.display} />
-          }}
+          <Route
+            path="/"
+            exact
+            render={({ match, history }) => {
+              return (
+                <OrganiserView
+                  createdEvent={this.state.createdEvent}
+                  eventData={this.state.eventData}
+                  createNewEvent={this.createNewEvent}
+                  urlToShare={this.state.urlToShare}
+                  uniqueEventName={this.uniqueEventName}
+                  display={this.state.display}
+                />
+              );
+            }}
           />
 
-          <Route path="/event/:eventId" render={({ match, history }) => {
-            return <UserView memberId={this.state.memberId}
-              eventId={match.params.eventId}
-              isMember={this.state.isMember}
-              registerUser={this.registerUser}
-              getEvent={this.getEvent}
-              createNewSuggestion={this.createNewSuggestion} />
-          }}
+          <Route
+            path="/event/:eventId"
+            render={({ match, history }) => {
+              return (
+                <UserView
+                  memberId={this.state.memberId}
+                  eventId={match.params.eventId}
+                  isMember={this.state.isMember}
+                  registerUser={this.registerUser}
+                  getEvent={this.getEvent}
+                  createNewSuggestion={this.createNewSuggestion}
+                />
+              );
+            }}
           />
           <Footer />
-
         </main>
       </Router>
-    )
+    );
   }
 }
 

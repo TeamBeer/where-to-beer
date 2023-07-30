@@ -1,11 +1,11 @@
-import React from 'react';
-import { shallow } from 'enzyme';
-import App from '../../src/components/App';
+import React from "react";
+import { shallow } from "enzyme";
+import App from "../../src/components/App";
 
-global.fetch = require('jest-fetch-mock');
-global.localStorage = require('jest-localstorage-mock');
+global.fetch = require("jest-fetch-mock");
+global.localStorage = require("jest-localstorage-mock");
 
-describe('App', () => {
+describe("App", () => {
   let wrapper;
   let instance;
 
@@ -16,35 +16,34 @@ describe('App', () => {
     instance = wrapper.instance();
   });
 
-  describe('On first load', () => {
-
-    test('Initial state eventData should only contain a default time', () => {
+  describe("On first load", () => {
+    test("Initial state eventData should only contain a default time", () => {
       expect(instance.state).toEqual({
         createdEvent: {},
         urlToShare: "",
         isMember: false,
         memberId: 0,
         display: "creation",
-        toggle: false
-      })
+        toggle: false,
+      });
     });
 
-    test('If user ID exists in localStorage, user should be identified from database', () => {
-      localStorage.setItem('memberId', JSON.stringify({ memberId: 23 }));
-      const memberData = { name: "Joe", id: 23 }
+    test("If user ID exists in localStorage, user should be identified from database", () => {
+      localStorage.setItem("memberId", JSON.stringify({ memberId: 23 }));
+      const memberData = { name: "Joe", id: 23 };
       fetch.mockResponse(JSON.stringify(memberData));
       return instance.initialFetch().then(() => {
-        expect(fetch).toHaveBeenCalledWith('/api/member/23')
+        expect(fetch).toHaveBeenCalledWith("/api/member/23");
         expect(wrapper.state()).toMatchObject({
           createdEvent: {},
           urlToShare: "",
           isMember: true,
           memberId: 23,
           display: "creation",
-          toggle: false
+          toggle: false,
         });
-      })
-    })
+      });
+    });
   });
 
   // TODO: onSubmit
@@ -54,5 +53,4 @@ describe('App', () => {
   // TODO: createNewEvent
 
   // TODO: registerUser
-
 });

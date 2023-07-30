@@ -1,64 +1,59 @@
-@import '../base/_variables.scss';
+@import "../base/_variables.scss";
 .setup__header {
-    text-align: center;
-
+  text-align: center;
 }
 .setup__title {
-    font-size: 1.5rem;
-    color: $accent-color;
+  font-size: 1.5rem;
+  color: $accent-color;
 }
 
-.suggestion{
+.suggestion {
   display: flex;
 
-  &__card{
+  &__card {
     background-color: $primary-color;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border-radius: 7px;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 7px;
   }
-  &__header{
+  &__header {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
   }
 
-  &__title{
+  &__title {
     margin: 0;
-
   }
 
-  &__info{
+  &__info {
     text-align: right;
   }
 
-  &__pub{
-
-    &-details{
-      background-color: lighten($primary-color, 30% );
+  &__pub {
+    &-details {
+      background-color: lighten($primary-color, 30%);
       color: $dark-color;
       padding-top: 0.25rem;
       border-radius: 7px;
     }
 
-    &-name{
+    &-name {
       text-align: center;
       font-size: 2rem;
       margin-bottom: 0;
       margin-top: 1rem;
     }
 
-    &-postcode{
+    &-postcode {
       text-align: right;
       margin-top: 0;
       margin-right: 1rem;
       margin-bottom: 0.5rem;
     }
-
-
   }
 
-  &__description{
+  &__description {
     color: $dark-color;
     background-color: #eee;
     text-align: right;
@@ -70,7 +65,7 @@
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
 
-    &:before{
+    &:before {
       position: absolute;
       top: -55px;
       left: 0;
@@ -79,7 +74,7 @@
       display: block;
     }
 
-    &:after{
+    &:after {
       content: "";
       position: absolute;
       top: -25px;
@@ -89,27 +84,22 @@
       display: block;
       width: 0;
     }
-
-
   }
 
-
-  &__voters{
+  &__voters {
     display: flex;
     flex-direction: row;
   }
 
-    &__voter{
-        width:10%;
-        border-radius:50%;
-        text-align:center;
-        font-size: 1rem;
-        padding:5% 0;
-        line-height:0;
-        position:relative;
-        background:$accent-color;
-        color: $light-color;
-
-          }
-
+  &__voter {
+    width: 10%;
+    border-radius: 50%;
+    text-align: center;
+    font-size: 1rem;
+    padding: 5% 0;
+    line-height: 0;
+    position: relative;
+    background: $accent-color;
+    color: $light-color;
+  }
 }
